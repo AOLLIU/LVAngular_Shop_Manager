@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="page-header">
+        <div class="title">普通列表</div>
+        <div class="subtitle">一个用于数据展示的普通列表</div>
+    </div>
+
+    <div class="form">
+        <a class="btn" href="#!/shop/add">添加商户</a>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>店铺名称</th>
+            <th>地址</th>
+            <th>认证</th>
+            <th>状态</th>
+            <th>明细</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in tableData">
+            <td>{{d.shopId}}</td>
+            <td>{{d.shopName}}</td>
+            <td>{{d.location}}</td>
+            <td>{{d.isCheck == 1?'是':'否'}}</td>
+            <td>{{d.status}}</td>
+            <td><a href="#!/shop/detail/1">查看</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

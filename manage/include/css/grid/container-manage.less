@@ -1,0 +1,98 @@
+@import "../var/toolbox";
+@import "../var/colors";
+
+@min-width: 1024px;
+@padding: 15px;
+@nav-bar-height: 30px;
+
+@font-size-menu: 16px;
+
+.container {
+  .box-sizing;
+  .relative;
+  min-width: @min-width;
+  padding: 0 @padding;
+}
+
+.row {
+  .clearfix;
+  .box-sizing;
+  .relative;
+  margin: 0 @padding*(-1);
+}
+
+.content {
+  position: absolute;
+  height: auto;
+  top: @nav-bar-height;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.sidebar {
+  .relative;
+  .box-sizing;
+  width: 179px;
+  height: 100%;
+  display: inline-block;
+  border-right: 1px solid @color4;
+  background-color: @color5;
+  vertical-align: top;
+
+}
+
+.menu-lv2 {
+  > .menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding-top: @padding;
+    overflow: auto;
+
+    > li {
+      line-height: 30px;
+      background-color: @color5;
+      font-size: @font-size-menu;
+
+      &.active {
+        > a {
+          background-color: @color4;
+          border-top: 1px solid @color3;
+          border-bottom: 1px solid @color3;
+        }
+      }
+
+      > a {
+        display: block;
+        background-color: @color5;
+        border-top: 1px solid @color5;
+        border-bottom: 1px solid @color5;
+
+        &:hover {
+          background-color: @color4;
+          border-top: 1px solid @color3;
+          border-bottom: 1px solid @color3;
+        }
+
+        > span {
+          margin-left: @padding;
+        }
+      }
+    }
+
+  }
+}
+
+.main {
+  .box-sizing;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 180px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

@@ -1,0 +1,32 @@
+@import "../var/toolbox";
+@import "../var/colors";
+
+.table {
+  width: 100%;
+
+  > thead {
+    background-color: @color4;
+
+    th {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+  }
+
+  > tbody {
+
+    tr {
+      border-bottom: 1px solid @color4;
+
+      &:hover {
+        background-color: @color5;
+      }
+    }
+  }
+
+  th, td {
+    padding: 5px;
+  }
+
+}

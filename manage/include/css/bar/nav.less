@@ -1,0 +1,65 @@
+@import "../var/toolbox";
+@import "../var/colors";
+@import "../grid/container-manage";
+
+@padding-v: 5px;
+@padding-h: @padding;
+
+@color-hover: @color2;
+@color-hover-font: @color-white;
+@color-activ: @color2;
+@color-activ-font: @color-white;
+
+@font-size: 16px;
+
+.nav {
+  .container;
+  .clearfix;
+}
+
+.nav-icon {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  padding: @padding-v @padding-h;
+  padding-right: @padding-h*2;
+  cursor: pointer;
+  .no-user-select;
+
+  & + .nav-bar {
+    margin: 0;
+  }
+
+}
+
+.nav-bar {
+  .row;
+  list-style: none;
+  display: inline-table;
+
+  &.left {
+    .pull-left;
+  }
+
+  &.right {
+    .pull-right;
+  }
+
+  > li {
+    display: inline-block;
+    padding: @padding-v @padding-h;
+    font-size: @font-size;
+    cursor: pointer;
+    .no-user-select;
+
+    &.active {
+      background-color: @color-activ;
+      color: @color-activ-font;
+    }
+
+    &:hover {
+      background-color: @color-hover;
+      color: @color-hover-font;
+    }
+  }
+}

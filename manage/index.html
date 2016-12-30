@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="zh" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="zh" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="zh" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>通用积分</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <link rel="stylesheet" href="include/css/manage.css">
+</head>
+<body ng-controller="AppCtrl">
+<div class="nav">
+    <div class="nav-icon">通用积分联盟商户管理平台</div>
+    <ul class="nav-bar">
+        <li ng-repeat="mlv1 in _menuLv1List" ng-class="{'active':menuLv1 == mlv1.active}">
+            <a href="{{mlv1.router}}">{{mlv1.title}}</a>
+        </li>
+    </ul>
+</div>
+<div class="content">
+    <div class="sidebar">
+        <div ng-include="menu" class="menu-lv2"></div>
+    </div>
+    <div class="main">
+        <div ng-view></div>
+    </div>
+</div>
+
+<script src="include/js/angular/angular.js"></script>
+<script src="include/js/angular/angular-route.js"></script>
+<script src="include/js/core.js"></script>
+
+<script src="permissions.js"></script>
+<script src="shop/shop.js"></script>
+<script src="table/table.js"></script>
+<script src="view1/view1.js"></script>
+<script src="view2/view2.js"></script>
+<script src="include/app.js"></script>
+</body>
+</html>
