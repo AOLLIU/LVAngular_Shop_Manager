@@ -1,16 +1,15 @@
-/**
- * Created by shawn on 2016/11/8.
- */
+
 (function (window, addFuncs, addObjs) {
+
     window['$AppData'] = {
         _scope: {},
         _menuLv1List: []
     };
-
     window['$AppFunc'] = addFuncs();
-
     window['$AppObj'] = addObjs();
+
 })(window, function () {
+
     var appFunc = {};
     /**
      * 注册页面控制域
@@ -19,6 +18,10 @@
      */
     appFunc.registerScope = function (module, $scope) {
         $AppData._scope[module] = $scope;
+        /*
+        * $on、$emit和$broadcast的使用:
+        * http://www.cnblogs.com/CraryPrimitiveMan/p/3679552.html
+        * */
         $scope.$on('$routeChangeStart', function (scope, next, current) {
         });
     }
@@ -57,7 +60,9 @@
     }
 
     return appFunc;
+
 }, function () {
+
     var appObj = {};
     /**
      * 一级菜单对象

@@ -1,8 +1,239 @@
 <div class="container">
-	<div class="page-header">
-		<div class="title">普通列表</div>
-		<div class="subtitle">一个用于数据展示的普通列表</div>
+
+	<!--头部-->
+	<div class="shopDetailHeader-container">
+			<div class="shopDetailContainer">
+				<span class="shopDetailTitle">{{shop.shopName}}</span>
+				<input type="button" class="shopDetailState" ng-value="shopDetailStatus" ng-class="{'shopAbleUseState':shop.status == 0,'shopLockUseState':shop.status == 1,'shopDisableUseState':shop.status == 2}">
+				<label class="shopDetailLocation">{{shop.location}}</label>
+			</div>
+
+			<div class="shopDetailHeader-innerContainer">
+				<div class="shopHeaderLeftContainer">
+					<div>信用额度</div>
+					<div class="shopDetail-creditLimit">{{shop.commissionChargeRate}}</div>
+				</div>
+				<div class="shopHeaderRightContainer">
+					<div class="shopManagerInfoDiv">负责人信息:  {{shop.shopManagerName}} {{shop.shopManagerMobile}}</div>
+					<div>
+
+						<button class="shopDetail-commentBtn" id="changeShopStatus" data-toggle="modal" data-target="#changeShopStatusModal"><span>修改状态</span></button>
+						<a href="#!/shop/changeShopData" class="shopDetail-commentBtn"><span>修改资料</span></a>
+						<button class="shopDetail-commentBtn" id="destroyShop" data-toggle="modal" data-target="#destroyShopModal"><span>注销商户</span></button>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	<!--结算单周期配置-->
+	<div class="settlementPeriod-container">
+		<div class="shopDetail-commentTitle">结算单周期配置</div>
+
+		<div class="allSettlement-container">
+			<div class="settlementLeft-container">
+				<div class="systemSettingTitle">系统配置</div>
+				<input type="text" class="systemSettingInput">
+			</div>
+			<div class="settlementRight-container">
+				<div class="CustomSettingTitle">自定义配置</div>
+				<input type="text" class="CustomSettingInput">
+				<input type="button" class="CustomSettingDaily" value="日">
+				<input type="button" class="CustomSettingMonthly" value="月">
+			</div>
+		</div>
+
 	</div>
 
-	{{shopid}}
+	<!--//管理员设置-->
+	<div class="settlementPeriod-container">
+		<div style="position: relative">
+			<div class="shopDetail-commentTitle">管理员设置</div>
+			<a href="" class="shopDetail-commentBtn addManagerBtnClass"><span>添加管理员</span></a>
+		</div>
+
+
+		<table class="table">
+			<thead>
+			<tr>
+				<th>管理员账号</th>
+				<th>管理员</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			<tr>
+				<td>{{shopAdmin.username}}</td>
+				<td>{{shopAdmin.password}}</td>
+				<td>
+					<a href="" class="shopDetail-commentBtn"><span>修改</span></a>
+					<a href="" class="shopDetail-commentBtn"><span>删除</span></a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+	<!--//收银员设置-->
+	<div class="settlementPeriod-container">
+		<div class="shopDetail-commentTitle">收银员设置</div>
+
+		<table class="table">
+			<thead>
+			<tr>
+				<th>收银员姓名</th>
+				<th>收银员手机号码</th>
+				<th>创建时间</th>
+				<th>最后登录时间</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			<tr ng-repeat="d in shopCashiers">
+				<td>{{d.realname}}</td>
+				<td>{{d.mobile}}</td>
+				<td>{{d.creatTime | myDateFormat}}</td>
+				<td>{{d.lastLoginTime | myDateFormat}}</td>
+			</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+	<!--//绑定设备信息-->
+	<div class="settlementPeriod-container">
+		<div class="shopDetail-commentTitle">绑定设备信息</div>
+
+		<table class="table">
+			<thead>
+			<tr>
+				<th>商户账户</th>
+				<th>商户名称</th>
+				<th>设备型号</th>
+				<th>设备终端号</th>
+				<th>设备MAC</th>
+				<th>所属商城</th>
+				<th>日期</th>
+				<th>设备状态</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			<tr ng-repeat="d in deviceTerminals">
+				<td>{{d.shopId}}</td>
+				<td>{{d.mallName}}</td>
+				<td>{{d.modelNo}}</td>
+				<td>{{d.terminalId}}</td>
+				<td>{{d.terminalSN}}</td>
+				<td>{{d.mallName}}</td>
+				<td>{{d.createTime | myDateFormat}}</td>
+				<td>{{d.status}}</td>
+			</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+
+	<!--修改状态弹框-->
+	<div class="modal fade" id="changeShopStatusModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+			<div class="modal-content changeShopStatusModalContainer">
+				<div class="modal-header shopModalCommonHeader">商户账户状态修改</div>
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">{{shop.shopName}}</div>
+					<div class="shopStatus-modalBtnContainer">
+						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 0}" ng-click="startUsingBtnClick()"><span>启用</span></button>
+						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 1}" ng-click="freezeUsingBtnClick()"><span>冻结</span></button>
+						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 2}" ng-click="forbidUsingBtnClick()"><span>禁用</span></button>
+					</div>
+					<div class="shopStatus-modalTip">
+						提示:冻结账户，账户将不能进行正常交易，仅能登录和查看历史数据。请谨慎操作!
+					</div>
+				</div>
+				<div class="modal-footer shopModalCommonFooter" >
+					<div class="reasonRemarksTitle">备注原因</div>
+					<div class="reasonRemarks">
+						<input type="text" placeholder="请输入操作原因" class="changeReasonInput" ng-model="changeStatusReason">
+						<input type="text" placeholder="请输入授权密码" class="changeStatusAbilityInput" ng-model="changeStatusAbilityCode">
+						<button class="shopDetail-commentBtn selectStatusBtn changeConformBtn" id="changeShopStatusConform" ng-click="changeShopStatusConformBtnClick()">确定修改</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--注销商户账户-->
+	<div class="modal fade" id="destroyShopModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+			<div class="modal-content changeShopStatusModalContainer">
+				<div class="modal-header shopModalCommonHeader">注销商户账户</div>
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">即将注销{{shop.shopName}}</div>
+					<div class="shopStatus-modalTip">
+						注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
+					</div>
+				</div>
+				<div class="modal-footer shopModalCommonFooter" >
+					<div class="reasonRemarksTitle">备注原因</div>
+					<div class="reasonRemarks">
+						<input type="text" placeholder="请输入操作原因" class="changeReasonInput" ng-model="destroyShopReason">
+						<input type="text" placeholder="请输入授权密码" class="changeStatusAbilityInput" ng-model="destroyShopAbilityCode">
+						<button class="shopDetail-commentBtn selectStatusBtn changeConformBtn" data-toggle="modal" data-target="#destroyShopConformModal" ng-click="destroyShopBtnClick()">注销</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		</div>
+
+	<!--注销商户账户确认-->
+	<div class="modal fade" id="destroyShopConformModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+			<div class="modal-content changeShopStatusModalContainer">
+				<div class="modal-header shopModalCommonHeader">注销商户账户</div>
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">即将注销{{shop.shopName}}</div>
+					<div class="shopStatus-modalTip">
+						注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
+					</div>
+				</div>
+				<div class="modal-footer shopModalCommonFooter" >
+					<div class="reasonRemarksTitle">请谨慎操作</div>
+					<div class="destroyShopConformBtn">
+						<button class="shopDetail-commentBtn selectStatusBtn changeConformBtn" ng-click="destroyShopConformBtnClick()">确认注销</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--注销成功-->
+	<div class="modal fade" id="destroyShopSuccessModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+			<div class="modal-content destroyShopSuccessModalContainer">
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">注销成功</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--注销失败-->
+	<div class="modal fade" id="destroyShopFailModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+			<div class="modal-content destroyShopSuccessModalContainer">
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">注销失败</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 </div>

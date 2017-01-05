@@ -1,33 +1,97 @@
 <div class="container">
     <div class="page-header">
-        <div class="title">普通列表</div>
-        <div class="subtitle">一个用于数据展示的普通列表</div>
+        <div class="panel-body">
+
+            <div class="panel-control-container">
+                <label class="panel-label">商户账号</label>
+                <input type="text" class="panel-input"
+                       placeholder="请输入商户账号" ng-model="shopId">
+            </div>
+
+            <div class="panel-control-container">
+                <label class="panel-label">商户名称</label>
+                <input type="text" class="panel-input"
+                       placeholder="请输入商户名称" ng-model="shopName">
+            </div>
+
+
+            <div class="panel-control-container">
+                <label class="panel-label">所属类别</label>
+                <select class="panel-select" ng-model="itemClassFilter" ng-options="class.name for class in industries">
+                </select>
+
+            </div>
+
+
+            <div class="panel-control-container">
+                <label class="panel-label">商户状态</label>
+                </select>
+                <select class="panel-select" ng-model="itemStateFilter" ng-options="state.canUseState for state in shopCanUseStates">
+                </select>
+            </div>
+
+            <div class="panel-control-container">
+                <button type="button" class="searchBtn" ng-click="searchBtnClick()">搜索</button>
+            </div>
+
+        </div>
     </div>
 
-    <div class="form">
-        <a class="btn" href="#!/shop/add">添加商户</a>
+    <div class="shopUseStateContainer">
+        状态说明:
+        <input type="button" class="shopAbleUseState shopUseState">
+        <span class="stateLabel">正常</span>
+        <input type="button" class="shopLockUseState shopUseState">
+        <span class="stateLabel">冻结</span>
+        <input type="button" class="shopDisableUseState shopUseState">
+        <span class="stateLabel">禁用</span>
+        <span style="float: right">
+            <span>+</span>
+            <a href="#!/shop/add"><span style="font-size: 14px">添加商户</span></a>
+        </span>
+
+
     </div>
 
     <table class="table">
         <thead>
         <tr>
-            <th>#</th>
-            <th>店铺名称</th>
-            <th>地址</th>
-            <th>认证</th>
+            <th>商户账号</th>
+            <th>商户名称</th>
+            <th>商铺位置</th>
+            <th>所属分组</th>
+            <th>负责人信息</th>
+            <th>信用额度</th>
             <th>状态</th>
-            <th>明细</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
+
         <tr ng-repeat="d in tableData">
             <td>{{d.shopId}}</td>
             <td>{{d.shopName}}</td>
             <td>{{d.location}}</td>
-            <td>{{d.isCheck == 1?'是':'否'}}</td>
-            <td>{{d.status}}</td>
-            <td><a href="#!/shop/detail/1">查看</a></td>
+            <td>{{d.industry}}</td>
+            <td>{{d.shopManagerName}}</td>
+            <td>{{d.commission}}</td>
+            <td>
+                <input type="button" class="shopUseStateCenter" ng-class="{'shopAbleUseState':d.status == 0,'shopLockUseState':d.status == 1,'shopDisableUseState':d.status == 2}">
+
+</td>
+            <td>
+                <a href="#!/shop/detail/{{d.shopId}}" class="tdInnerBtn"><span>详细</span></a>
+                <a href="#!/shop/add" class="tdInnerBtn"><span>注销</span></a>
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <!--页码标记-->
+    <div class="bodyContainerFooter">
+
+        <input id="forwardBtn" class="detailPageBtn" type="button" value="上一页" ng-click="jumpToForwardPage()"/>
+        <!--<label class="displayPageLabel">第1页,共100页</label>-->
+        <input class="detailPageBtn" type="button" value="下一页" ng-click="jumpToNextPage()"/>
+    </div>
 </div>

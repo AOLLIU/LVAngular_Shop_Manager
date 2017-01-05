@@ -1,0 +1,47 @@
+.no-user-select {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.box-sizing {
+  box-sizing: border-box;
+}
+.relative {
+  position: relative;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.clearfix {
+  clear: both;
+}
+.clearfix:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.bodyContainerFooter {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.detailPageBtn {
+  margin-left: 15px;
+  background-color: #636363;
+  color: white;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 5px 30px;
+  border: 1px solid gray;
+}
+.displayPageLabel {
+  margin-left: 10px;
+  font-size: 14px;
+}

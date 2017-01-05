@@ -1,0 +1,66 @@
+.panel-body {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.panel-control-container {
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 15px;
+}
+.panel-input {
+  margin-left: 10px;
+  width: 130px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
+}
+.panel-select {
+  margin-left: 10px;
+  width: 120px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
+}
+.searchBtn {
+  margin-left: 15px;
+  background-color: #636363;
+  color: white;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 5px 30px;
+  border: 1px solid gray;
+}
+.shopUseStateContainer {
+  margin-left: 15px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.shopUseState {
+  margin-left: 10px;
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+}
+.shopUseStateCenter {
+  margin-left: 10px;
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  margin-left: 0px;
+}
+.shopAbleUseState {
+  background-color: #36e017;
+  border: 1px solid #36e017;
+}
+.shopLockUseState {
+  background-color: #ffbc0c;
+  border: 1px solid #ffbc0c;
+}
+.shopDisableUseState {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+}

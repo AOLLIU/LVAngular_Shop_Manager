@@ -336,26 +336,40 @@ div {
 }
 .page-header {
   padding: 15px 0 5px 0;
-  border-bottom: 1px solid #ac2a2a;
+  border-bottom: 1px solid #CDCDCD;
   margin-bottom: 15px;
 }
-.page-header > .title {
-  font-size: 18px;
-  font-weight: bold;
+.bodyContainerFooter {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
 }
-.page-header > .subtitle {
-  margin-top: 5px;
-  color: #a9a9a9;
+.detailPageBtn {
+  margin-left: 15px;
+  background-color: #636363;
+  color: white;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 5px 30px;
+  border: 1px solid gray;
+}
+.displayPageLabel {
+  margin-left: 10px;
+  font-size: 14px;
 }
 .table {
   width: 100%;
+  text-align: center;
 }
 .table > thead {
-  background-color: #d9d9d9;
+  background-color: #737373;
+  color: white;
 }
 .table > thead th {
+  text-align: center;
   font-size: 14px;
   font-weight: bold;
+  height: 30px;
 }
 .table > tbody tr {
   border-bottom: 1px solid #d9d9d9;
@@ -366,6 +380,16 @@ div {
 .table th,
 .table td {
   padding: 5px;
+  font-size: 14px;
+}
+.tdInnerBtn {
+  border: 1px solid gray;
+  border-radius: 3px;
+  width: 50px;
+  display: inline-block;
+  font-size: 14px;
+  background-color: white;
+  margin: 8px;
 }
 .input-text {
   line-height: 20px;
@@ -375,25 +399,28 @@ div {
   min-width: 200px;
 }
 .form {
+  width: 50%;
   margin-bottom: 5px;
-}
-.form > .label {
-  padding: 15px 0 5px 0;
+  font-size: 15px;
   display: inline-block;
-  border-bottom: 1px solid #7e7e7e;
-  margin-bottom: 15px;
-  min-width: 200px;
-  font-size: 16px;
-  font-weight: bold;
+  text-align: left;
 }
-.form .form-view {
-  padding: 5px 0;
-}
-.form .form-view > label {
+.form-view {
   display: block;
+  margin: 20px;
+}
+.form-label {
+  display: inline-block;
+  width: 30%;
+  text-align: right;
   margin-right: 10px;
-  font-weight: bold;
-  font-size: 14px;
+}
+.input-text {
+  border-radius: 4px;
+  width: 150px;
+  border: 1px solid #b5b5b5;
+  height: 30px;
+  line-height: 30px;
 }
 .btn {
   background-color: #a9a9a9;
@@ -409,4 +436,341 @@ div {
 .btn:link,
 .btn :visited {
   color: #ffffff !important;
+}
+.panel-body {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.panel-control-container {
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 15px;
+}
+.panel-input {
+  margin-left: 10px;
+  width: 130px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
+}
+.panel-select {
+  margin-left: 10px;
+  width: 120px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
+}
+.searchBtn {
+  margin-left: 15px;
+  background-color: #636363;
+  color: white;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 5px 30px;
+  border: 1px solid gray;
+}
+.shopUseStateContainer {
+  margin-left: 15px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.shopUseState {
+  margin-left: 10px;
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+}
+.shopUseStateCenter {
+  margin-left: 10px;
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  margin-left: 0px;
+}
+.shopAbleUseState {
+  background-color: #36e017;
+  border: 1px solid #36e017;
+}
+.shopLockUseState {
+  background-color: #ffbc0c;
+  border: 1px solid #ffbc0c;
+}
+.shopDisableUseState {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+}
+.addshopPanel-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+.addShopTipLabel {
+  font-size: 13px;
+  margin-left: 5px;
+}
+.addShopHeader {
+  display: inline-block;
+  width: 50%;
+  padding-bottom: 5px;
+  border-bottom: 1px solid gray;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: left;
+}
+.addShop-btnContainer {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.industryBelong {
+  border-radius: 4px;
+  border: 1px solid #b5b5b5;
+  height: 35px;
+  line-height: 35px;
+  background-color: white;
+}
+.addShopConformBtn {
+  margin-left: 15px;
+  background-color: #000000;
+  color: white;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 5px 30px;
+  border: 1px solid #000000;
+}
+.addShopCancelBtn {
+  margin-left: 15px;
+  background-color: #636363;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 5px 30px;
+  display: inline-block;
+  border: 1px solid #636363;
+}
+.addShopCancelSpan {
+  color: white;
+}
+.protocalCheckBoxContainer {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.protocalTip {
+  margin-left: 5px;
+}
+.protocalLink {
+  color: #4844ff;
+}
+.shopDetailHeader-container {
+  padding: 5px 0 5px 0;
+  margin-bottom: 15px;
+  background-color: #f4f4f4;
+  height: 140px;
+}
+.shopDetailContainer {
+  margin-left: 10px;
+  margin-top: 20px;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid gray;
+}
+.shopDetailTitle {
+  font-size: 23px;
+  font-weight: bold;
+}
+.shopDetailState {
+  margin-left: 8px;
+  color: white;
+  border-radius: 8px;
+  margin-top: 10px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 13px;
+}
+.shopDetailLocation {
+  float: right;
+}
+.shopDetailHeader-innerContainer {
+  position: relative;
+}
+.shopHeaderLeftContainer {
+  margin-top: 5px;
+  margin-left: 10px;
+  display: inline-block;
+  font-size: 14px;
+}
+.shopDetail-creditLimit {
+  font-size: 17px;
+  font-weight: bold;
+}
+.shopHeaderRightContainer {
+  top: 5px;
+  right: 0px;
+  position: absolute;
+}
+.shopManagerInfoDiv {
+  text-align: right;
+  font-size: 13px;
+}
+.shopDetail-commentBtn {
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 70px;
+  display: inline-block;
+  font-size: 14px;
+  color: black;
+  margin: 8px 8px 8px 0px;
+  text-align: center;
+  padding: 2px 3px;
+  background-color: white;
+}
+.settlementPeriod-container {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+.shopDetail-commentTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dotted #979797;
+}
+.allSettlement-container {
+  position: relative;
+}
+.settlementLeft-container {
+  background-color: #ebebeb;
+  width: 49%;
+  height: 150px;
+  border: 1px solid #3f3f3f;
+}
+.settlementLeft-container > .systemSettingTitle {
+  margin: 15px 25px 8px;
+  font-size: 15px;
+}
+.settlementLeft-container > .systemSettingInput {
+  margin: 10px 25px 8px;
+  border: 1px solid #828282;
+  width: 200px;
+  border-radius: 5px;
+  height: 30px;
+}
+.settlementRight-container {
+  width: 49%;
+  height: 150px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border: 1px solid #3f3f3f;
+}
+.settlementRight-container > .CustomSettingTitle {
+  margin: 15px 25px 8px;
+  font-size: 15px;
+}
+.settlementRight-container > .CustomSettingInput {
+  margin: 10px 25px 8px;
+  border: 1px solid #828282;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+}
+.settlementRight-container > .CustomSettingDaily {
+  padding: 5px 15px;
+  border: 1px solid #111111;
+  border-radius: 5px;
+  background-color: #111111;
+  color: #ffffff;
+}
+.settlementRight-container > .CustomSettingMonthly {
+  margin-left: 10px;
+  padding: 5px 15px;
+  border: 1px solid #111111;
+  border-radius: 5px;
+}
+.addManagerBtnClass {
+  position: absolute;
+  right: 0px;
+  top: -10px;
+  width: 80px;
+}
+.changeShopStatusModalContainer {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 550px;
+}
+.shopModalCommonHeader {
+  background-color: #dfdfdf;
+  font-size: 17px;
+  font-weight: bold;
+  border-bottom: 1px solid gray;
+}
+.shopStatus-modalTitle {
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+}
+.shopStatus-modalBtnContainer {
+  text-align: center;
+  margin-top: 15px;
+}
+.selectStatusBtn {
+  color: white;
+  background-color: #000000;
+}
+.shopStatus-modalTip {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+.shopModalCommonFooter {
+  border-top: 1px solid gray;
+  background-color: #dfdfdf;
+  display: block;
+}
+.reasonRemarksTitle {
+  display: block;
+  color: gray;
+  font-size: 13px;
+}
+.reasonRemarks {
+  display: block;
+}
+.changeReasonInput {
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding-left: 8px;
+}
+.changeStatusAbilityInput {
+  margin-left: 30px;
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding-left: 8px;
+  margin-right: 30px;
+}
+.changeConformBtn {
+  height: 30px;
+  padding: 2px 5px;
+}
+.destroyShopConformBtn {
+  display: block;
+  text-align: center;
+}
+.destroyShopSuccessModalContainer {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 200px;
 }
