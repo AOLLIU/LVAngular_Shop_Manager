@@ -1,4 +1,4 @@
 (function (w, t) {
-    w[t] = ['ngRoute', 'myApp.shop', 'myApp.table', 'myApp.view1', 'myApp.view2',]
+    w[t] = ['ngRoute', 'myApp.shop', 'myApp.table',]
 }(window, 'FuncPermissions'))
 

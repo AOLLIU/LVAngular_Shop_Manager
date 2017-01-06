@@ -81,7 +81,8 @@
 </td>
             <td>
                 <a href="#!/shop/detail/{{d.shopId}}" class="tdInnerBtn"><span>详细</span></a>
-                <a href="#!/shop/add" class="tdInnerBtn"><span>注销</span></a>
+                <button class="tdInnerBtn" id="destroyShop" ng-click="shopItemDestroiedBtnClick([d.shopId,d.shopName])"><span>注销</span></button>
+
             </td>
         </tr>
         </tbody>
@@ -94,4 +95,78 @@
         <!--<label class="displayPageLabel">第1页,共100页</label>-->
         <input class="detailPageBtn" type="button" value="下一页" ng-click="jumpToNextPage()"/>
     </div>
+
+
+    <!--注销商户账户-->
+    <div class="modal fade" id="destroyShopModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+            <div class="modal-content changeShopStatusModalContainer">
+                <div class="modal-header shopModalCommonHeader">注销商户账户</div>
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">即将注销{{destroyShopName}}</div>
+                    <div class="shopStatus-modalTip">
+                        注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
+                    </div>
+                </div>
+                <div class="modal-footer shopModalCommonFooter" >
+                    <div class="reasonRemarksTitle">备注原因</div>
+                    <div class="reasonRemarks">
+                        <input type="text" placeholder="请输入操作原因" class="changeReasonInput" ng-model="destroyShopReason">
+                        <input type="text" placeholder="请输入授权密码" class="changeStatusAbilityInput" ng-model="destroyShopAbilityCode">
+                        <button class="shopDetail-commentBtn selectStatusBtn changeConformBtn" data-toggle="modal" data-target="#destroyShopConformModal" ng-click="destroyShopBtnClick()">注销</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--注销商户账户确认-->
+    <div class="modal fade" id="destroyShopConformModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+            <div class="modal-content changeShopStatusModalContainer">
+                <div class="modal-header shopModalCommonHeader">注销商户账户</div>
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">即将注销{{destroyShopName}}</div>
+                    <div class="shopStatus-modalTip">
+                        注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
+                    </div>
+                </div>
+                <div class="modal-footer shopModalCommonFooter" >
+                    <div class="reasonRemarksTitle">请谨慎操作</div>
+                    <div class="destroyShopConformBtn">
+                        <button class="shopDetail-commentBtn selectStatusBtn changeConformBtn" ng-click="destroyShopConformBtnClick()">确认注销</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--注销成功-->
+    <div class="modal fade" id="destroyShopSuccessModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+            <div class="modal-content destroyShopSuccessModalContainer">
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">注销成功</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--注销失败-->
+    <div class="modal fade" id="destroyShopFailModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+            <div class="modal-content destroyShopSuccessModalContainer">
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">注销失败</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 </div>

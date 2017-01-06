@@ -379,7 +379,7 @@ div {
 }
 .table th,
 .table td {
-  padding: 5px;
+  padding: 10px 5px 5px;
   font-size: 14px;
 }
 .tdInnerBtn {
@@ -389,7 +389,8 @@ div {
   display: inline-block;
   font-size: 14px;
   background-color: white;
-  margin: 8px;
+  margin: 0px 8px;
+  text-align: center;
 }
 .input-text {
   line-height: 20px;
@@ -773,4 +774,57 @@ div {
   border-radius: 10px;
   overflow: hidden;
   width: 200px;
+}
+.addShopManager-modalTip {
+  margin-left: 150px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.addShopManagerInput {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #5d5d5d;
+  width: 210px;
+  margin-bottom: 10px;
+}
+.addShopManagerTip {
+  margin-left: 10px;
+  color: red;
+}
+.addManagerBtn {
+  width: 90px;
+  height: 30px;
+  padding: 2px 5px;
+}
+.equipmentHadBindState {
+  background-color: #414fe0;
+  border: 1px solid #414fe0;
+}
+.equipmentNotBindState {
+  background-color: #36e017;
+  border: 1px solid #36e017;
+}
+.equipmentHadDeleteState {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+}
+.operationCenterContainer {
+  margin-left: 23px;
+}
+.totalSelectLabel {
+  margin-left: 5px;
+  margin-right: 20px;
+}
+.btnvisible {
+  display: none;
+}
+.modal-footer-containerCenter {
+  text-align: center;
+}
+.modal-footer-btnMarginLeft {
+  margin-left: 15px;
 }

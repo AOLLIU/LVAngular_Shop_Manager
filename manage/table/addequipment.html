@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="addshopPanel-container">
+        <div class="addShopHeader">
+            添加POS硬件设备
+        </div>
+
+        <div class="form">
+            <div class="form-view">
+                <label class="form-label">终端编号</label>
+                <input type="text" class="input-text" ng-model="terminalId">
+            </div>
+            <div class="form-view">
+                <label class="form-label">终端型号</label>
+                <input type="text" class="input-text" ng-model="terminalSN">
+            </div>
+            <div class="form-view">
+                <label class="form-label">序列号</label>
+                <input type="text" class="input-text" ng-model="modelNo">
+            </div>
+
+            <div class="form-view">
+                <label class="form-label">所属商城</label>
+                <select class="input-text" ng-model="selectEquipmentBindStates" ng-options="state.equipmentBindStates for state in equipmentBindStates">
+                </select>
+
+            </div>
+
+
+
+            <div class="addShop-btnContainer">
+                <button type="button" class="addShopConformBtn" ng-click="addEquipmentConformBtnClick()">确认添加</button>
+                <a href="#!/table" class="addShopCancelBtn"><span class="addShopCancelSpan">取消</span></a>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

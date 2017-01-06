@@ -1,27 +1,283 @@
 <div class="container">
     <div class="page-header">
-        <div class="title">普通列表</div>
-        <div class="subtitle">一个用于数据展示的普通列表</div>
+        <div class="panel-body">
+
+            <div class="panel-control-container">
+                <label class="panel-label">终端型号</label>
+                <input type="text" class="panel-input"
+                       placeholder="请输入终端型号" ng-model="modelNo">
+            </div>
+
+            <div class="panel-control-container">
+                <label class="panel-label">终端编号</label>
+                <input type="text" class="panel-input"
+                       placeholder="请输入终端编号" ng-model="terminalId">
+            </div>
+
+
+            <div class="panel-control-container">
+                <label class="panel-label">序列号</label>
+                <input type="text" class="panel-input"
+                       placeholder="请输入序列号" ng-model="terminalSN">
+
+            </div>
+
+
+            <div class="panel-control-container">
+                <label class="panel-label">绑定状态</label>
+                </select>
+                <select class="panel-select" ng-model="selectEquipmentBindStates" ng-options="state.equipmentBindStates for state in equipmentBindStates">
+                </select>
+            </div>
+
+            <div class="panel-control-container">
+                <button type="button" class="searchBtn" ng-click="searchEquipmentBtnClick()">搜索</button>
+            </div>
+
+        </div>
     </div>
 
-    <form class="form">
-        <input type="text" class="input-text">
-    </form>
+    <div class="shopUseStateContainer">
+        状态说明:
+        <input type="button" class="equipmentHadBindState shopUseState">
+        <span class="stateLabel">已绑定</span>
+        <input type="button" class="equipmentNotBindState shopUseState">
+        <span class="stateLabel">未绑定</span>
+        <input type="button" class="equipmentHadDeleteState shopUseState">
+        <span class="stateLabel">已禁用</span>
+        <span style="float: right">
+            <span>+</span>
+            <a href="#!/table/addequipment"><span style="font-size: 14px">POS硬件设备</span></a>
+        </span>
+
+
+    </div>
 
     <table class="table">
         <thead>
         <tr>
-            <th>col 1</th>
-            <th>col 2</th>
-            <th>col 3</th>
+            <!--<th>选择</th>-->
+            <th>终端编号</th>
+            <th>终端型号</th>
+            <th>序列号</th>
+            <th>所属商城</th>
+            <th>绑定状态</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
+
         <tr ng-repeat="d in tableData">
-            <td>{{d.d1}}</td>
-            <td>{{d.d2}}</td>
-            <td>{{d.d3}}</td>
+            <!--<td><input type="checkbox"></td>-->
+            <td>{{d.terminalId}}</td>
+            <td>{{d.modelNo}}</td>
+            <td>{{d.terminalSN}}</td>
+            <td>{{d.mallName}}</td>
+            <td>
+                <input type="button" class="shopUseStateCenter" ng-class="{'equipmentHadBindState':d.status == 0,'equipmentNotBindState':d.status == 1,'equipmentHadDeleteState':d.status == 2}">
+
+            </td>
+            <td>
+                <button class="tdInnerBtn" ng-click="changeEquipmentItemInfo(d)"><span>修改</span></button>
+                <button class="tdInnerBtn" ng-click="changeEquipmentItemBind(d)" ng-class="{'selectStatusBtn':d.status == 1}" ><span>{{(d.status | showBindState).a}}</span></button>
+                <button class="tdInnerBtn" ng-click="changeEquipmentItemUseStatus(d)"><span>{{(d.status | showBindState).b}}</span></button>
+
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <!--批量处理暂时没有做-->
+    <!--<div class="operationCenterContainer">-->
+        <!--<input type="checkbox"><label class="totalSelectLabel">全选</label>-->
+        <!--<button class="tdInnerBtn" ng-click="changeEquipmentItemInfo([])"><span>绑定s</span></button>-->
+        <!--<button class="tdInnerBtn" ng-click="changeEquipmentItemBind([])"><span>解绑</span></button>-->
+        <!--<button class="tdInnerBtn" ng-click="deleteEquipmentItemBind([])"><span>禁用</span></button>-->
+    <!--</div>-->
+
+    <!--页码标记-->
+    <div class="bodyContainerFooter">
+
+        <input id="forwardBtn" class="detailPageBtn" type="button" value="上一页" ng-click="jumpToForwardPage()"/>
+        <!--<label class="displayPageLabel">第1页,共100页</label>-->
+        <input class="detailPageBtn" type="button" value="下一页" ng-click="jumpToNextPage()"/>
+    </div>
+
+
+
+
+
+
+    <!--修改设备信息-->
+    <div class="modal fade" id="changeEquipmentInfoModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+            <div class="modal-content changeShopStatusModalContainer">
+                <div class="modal-header shopModalCommonHeader">修改设备信息</div>
+                <div class="modal-body">
+                    <div class="form-view">
+                        <label class="form-label">终端编号</label>
+                        <input type="text" class="input-text" ng-model="willChangedEquipmentItem.terminalId">
+                    </div>
+                    <div class="form-view">
+                        <label class="form-label">终端型号</label>
+                        <input type="text" class="input-text" ng-model="willChangedEquipmentItem.modelNo">
+                    </div>
+                    <div class="form-view">
+                        <label class="form-label">序列号</label>
+                        <input type="text" class="input-text" ng-model="willChangedEquipmentItem.terminalSN">
+                    </div>
+
+                    <div class="form-view">
+                        <label class="form-label">所属商城</label>
+                        <input type="text" class="input-text" ng-model="willChangedEquipmentItem.mallName">
+                    </div>
+                </div>
+                <div class="modal-footer shopModalCommonFooter" >
+                    <div class="destroyShopConformBtn">
+                        <button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="changeEquipmentInfoConformBtnClick()">确认修改</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--修改成功-->
+    <div class="modal fade" id="changeEquipmentInfoSuccessModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+            <div class="modal-content destroyShopSuccessModalContainer">
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">修改成功</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--绑定设备-->
+    <div class="modal fade" id="buildEquipmentBindStatusModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+            <div class="modal-content changeShopStatusModalContainer">
+                <div class="modal-header shopModalCommonHeader">绑定设置</div>
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">您将 终端编号{{willChangeEquipmentBindItem.terminalId}} 的设备绑定到</div>
+                    <div class="shopStatus-modalTip">
+                        <input type="text" class="changeReasonInput" placeholder="请输入要绑定的商户账户号">
+                    </div>
+                </div>
+                <div class="modal-footer shopModalCommonFooter" >
+                    <div class="modal-footer-containerCenter">
+                        <input type="text" placeholder="请输入授权密码" class="changeReasonInput" ng-model="equipmentBindPwd">
+
+                        <button class="shopDetail-commentBtn selectStatusBtn changeConformBtn modal-footer-btnMarginLeft" ng-click="buildEquipmentBindStatusConformBtnClick()">确认绑定</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--绑定成功-->
+    <div class="modal fade" id="buildEquipmentBindStatusSuccessModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+            <div class="modal-content destroyShopSuccessModalContainer">
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">绑定成功</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--解除绑定-->
+    <div class="modal fade" id="destoryEquipmentBindStatusModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+            <div class="modal-content changeShopStatusModalContainer">
+                <div class="modal-header shopModalCommonHeader">解绑设备</div>
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">
+                        商户账户号 {{willChangeEquipmentBindItem.mallName}} 以下设备将被解绑</div>
+                    <div class="shopStatus-modalTitle">
+                        终端编号:{{willChangeEquipmentBindItem.terminalId}}</div>
+                    <div class="shopStatus-modalTip">
+                        解绑设备：解绑设备将影响账户进行正常交易，请谨慎操作!
+                    </div>
+                </div>
+                <div class="modal-footer shopModalCommonFooter" >
+                    <div class="modal-footer-containerCenter">
+                        <input type="text" placeholder="请输入授权密码" class="changeReasonInput" ng-model="destoryEquipmentBindPwd">
+                        <button class="shopDetail-commentBtn selectStatusBtn changeConformBtn modal-footer-btnMarginLeft" id="changeShopStatusConform" ng-click="destoryEquipmentBindStatusConformBtnClick()">确定解绑</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--解绑成功-->
+    <div class="modal fade" id="destoryEquipmentBindStatusSuccessModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+            <div class="modal-content destroyShopSuccessModalContainer">
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">解绑成功</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--删除设备(禁用)-->
+    <div class="modal fade" id="changeEquipmentItemUseStatusModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+            <div class="modal-content changeShopStatusModalContainer">
+                <div class="modal-header shopModalCommonHeader">禁用设备</div>
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">
+                        即将禁用终端编号:{{willChangeEquipmentUseStatusItem.terminalId}}的设备
+                    </div>
+                </div>
+                <div class="modal-footer shopModalCommonFooter" >
+                    <div class="reasonRemarksTitle">备注禁用原因</div>
+                    <div class="reasonRemarks">
+                        <input type="text" placeholder="请输入禁用原因" class="changeReasonInput" ng-model="forbidEquipmentReason">
+                        <input type="text" placeholder="请输入授权密码" class="changeStatusAbilityInput" ng-model="forbidEquipmentPwd">
+                        <button class="shopDetail-commentBtn selectStatusBtn changeConformBtn" ng-click="changeEquipmentItemUseStatusConformBtnClick()">确认禁用</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--启用设备-->
+    <div class="modal fade" id="startEquipmentItemUseStatusModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+            <div class="modal-content changeShopStatusModalContainer">
+                <div class="modal-header shopModalCommonHeader">启用设备</div>
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">
+                        将要重新启用终端编号:{{willChangeEquipmentUseStatusItem.terminalId}}的设备
+                    </div>
+                </div>
+                <div class="modal-footer shopModalCommonFooter" >
+                    <div class="destroyShopConformBtn">
+                        <button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="startEquipmentItemUseStatusModalConformBtnClick()">确认启用</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--禁用(启用)设备成功-->
+    <div class="modal fade" id="changeEquipmentItemUseStatusSuccessModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+            <div class="modal-content destroyShopSuccessModalContainer">
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">操作成功</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>

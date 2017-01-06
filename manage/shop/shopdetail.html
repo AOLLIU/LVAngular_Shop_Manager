@@ -50,7 +50,10 @@
 	<div class="settlementPeriod-container">
 		<div style="position: relative">
 			<div class="shopDetail-commentTitle">管理员设置</div>
-			<a href="" class="shopDetail-commentBtn addManagerBtnClass"><span>添加管理员</span></a>
+			<!--<a href="" class="shopDetail-commentBtn addManagerBtnClass"><span>添加管理员</span></a>-->
+
+			<button class="shopDetail-commentBtn addManagerBtnClass"  data-toggle="modal" data-target="#addShopManagerModal"><span>添加管理员</span></button>
+
 		</div>
 
 
@@ -58,7 +61,7 @@
 			<thead>
 			<tr>
 				<th>管理员账号</th>
-				<th>管理员</th>
+				<th>管理员密码</th>
 				<th>操作</th>
 			</tr>
 			</thead>
@@ -68,8 +71,9 @@
 				<td>{{shopAdmin.username}}</td>
 				<td>{{shopAdmin.password}}</td>
 				<td>
-					<a href="" class="shopDetail-commentBtn"><span>修改</span></a>
-					<a href="" class="shopDetail-commentBtn"><span>删除</span></a>
+					<button class="tdInnerBtn" ng-click="changeManagerItemInfo([shopAdmin.username,shopAdmin.password])"><span>修改</span></button>
+					<button class="tdInnerBtn" ng-click="deleteManagerItemInfo([shopAdmin.username,shopAdmin.password])"><span>删除</span></button>
+
 				</td>
 			</tr>
 			</tbody>
@@ -230,6 +234,75 @@
 			<div class="modal-content destroyShopSuccessModalContainer">
 				<div class="modal-body">
 					<div class="shopStatus-modalTitle">注销失败</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--添加/修改管理员-->
+	<div class="modal fade" id="addShopManagerModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+			<div class="modal-content changeShopStatusModalContainer">
+				<div class="modal-header shopModalCommonHeader">添加/删除商户账户管理员</div>
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">{{shop.shopName}}</div>
+					<div class="addShopManager-modalTip">
+						<div>
+							<input type="text" placeholder="请输入管理员用户名" class="addShopManagerInput" ng-model="addManagerName">
+							<label class="addShopManagerTip">用户名已占用</label>
+						</div>
+						<div>
+							<input type="text" placeholder="请输入管理员登录密码" class="addShopManagerInput" ng-model="addManagerPwd">
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer shopModalCommonFooter" >
+					<div class="destroyShopConformBtn">
+						<button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="addManagerConformBtnClick()">添加管理员</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--添加成功-->
+	<div class="modal fade" id="addShopManagerSuccessModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+			<div class="modal-content destroyShopSuccessModalContainer">
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">添加成功</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="deleteShopManagerSuccessModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+			<div class="modal-content destroyShopSuccessModalContainer">
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">删除成功</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--删除管理员-->
+	<div class="modal fade" id="deleteShopManagerModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+			<div class="modal-content changeShopStatusModalContainer">
+				<div class="modal-header shopModalCommonHeader">删除商户账户管理员</div>
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">您即将删除 {{shop.shopName}} 下的管理员:</div>
+					<div class="shopStatus-modalTitle">
+						管理员账号: {{deleteManagerName}}
+					</div>
+				</div>
+				<div class="modal-footer shopModalCommonFooter" >
+					<div class="destroyShopConformBtn">
+						<button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="deleteShopManagerConformBtnClick()">确认删除</button>
+					</div>
+
 				</div>
 			</div>
 		</div>

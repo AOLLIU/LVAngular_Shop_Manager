@@ -43,8 +43,8 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         //请求数据
         $scope.shopId = null
         $scope.shopName = null
-        $scope.itemClassFilter = "全部"
-        $scope.itemStateFilter = "全部"
+        $scope.itemClassFilter = {"name":"全部","baseRate":"0"}
+        $scope.itemStateFilter = {"canUseState":"全部","status":"0"}
         // 获取行业列表数据
         // $http({
         //     method: "POST",
@@ -162,6 +162,52 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
                 // });
             }
         }
+
+
+
+        $scope.destroyShopId = null
+        $scope.destroyShopName = null
+        $scope.shopItemDestroiedBtnClick = function (model) {
+            $scope.destroyShopId = model[0]
+            $scope.destroyShopName = model[1]
+
+            $('#destroyShopModal').modal('show')
+        }
+
+        $scope.destroyShopBtnClick = function () {
+            $('#destroyShopModal').modal('hide')
+        }
+        $scope.destroyShopConformBtnClick = function () {
+            $('#destroyShopConformModal').modal('hide')
+            $('#destroyShopSuccessModal').modal('show')
+
+            for(var i = 0;i<$scope.tableData.length;i++){
+                if($scope.tableData[i].shopId == $scope.destroyShopId){
+                    $scope.tableData[i].status = 1
+                }
+            }
+
+            setTimeout(function () {
+
+                $('#destroyShopSuccessModal').modal('hide')
+            },1000)
+
+            // $http({
+            //     method: "POST",
+            //     url: "",
+            //     data: {
+            //         'shopId': $scope.shopId,
+            //         'status': '1',
+            //     }
+            // }).success(function (data, status) {
+            //     if (data.errcode == 0) {
+            //     } else {
+            //         alert(data.errmsg);
+            //     }
+            // }).error(function (data, status) {
+            // });
+        }
+
 
     }])
     .controller('DetailCtrl', ['$scope','$rootScope', '$http', '$routeParams', function ($scope,$rootScope, $http, $routeParams) {
@@ -350,6 +396,79 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         }
 
 
+        //添加管理员
+        $scope.addManagerName = null;
+        $scope.addManagerPwd = null;
+        $scope.addManagerConformBtnClick = function () {
+            $('#addShopManagerModal').modal('hide')
+            $('#addShopManagerSuccessModal').modal('show')
+            setTimeout(function () {
+                $('#addShopManagerSuccessModal').modal('hide')
+            },1000)
+            // $http({
+            //     method: "POST",
+            //     url: "",
+            //     data: {
+            //         'addManagerName': $scope.addManagerName,
+            //         'addManagerPwd': $scope.addManagerPwd,
+            //          'shopId':$scope.shopId
+            //     }
+            // }).success(function (data, status) {
+            //     if (data.errcode == 0) {
+            //     } else {
+            //         alert(data.errmsg);
+            //     }
+            // }).error(function (data, status) {
+            // });
+            $scope.addManagerName = null;
+            $scope.addManagerPwd = null;
+        }
+
+        //修改管理员信息
+        $scope.changeManagerItemInfo = function (itemModel) {
+            $scope.addManagerName = itemModel[0];
+            $scope.addManagerPwd = itemModel[1];
+            $('#addShopManagerModal').modal('show')
+        }
+
+
+
+        $scope.deleteManagerName = null;
+        $scope.deleteManagerPwd = null;
+        //删除管理员
+        $scope.deleteManagerItemInfo = function (itemModel) {
+            $scope.deleteManagerName = itemModel[0];
+            $scope.deleteManagerPwd = itemModel[1];
+            $('#deleteShopManagerModal').modal('show')
+        }
+
+        //确认删除
+        $scope.deleteShopManagerConformBtnClick = function () {
+
+            $('#deleteShopManagerModal').modal('hide')
+            $('#deleteShopManagerSuccessModal').modal('show')
+            setTimeout(function () {
+                $('#deleteShopManagerSuccessModal').modal('hide')
+            },1000)
+            // $http({
+            //     method: "POST",
+            //     url: "",
+            //     data: {
+            //         'addManagerName': $scope.addManagerName,
+            //         'addManagerPwd': $scope.addManagerPwd,
+            //          'shopId':$scope.shopId
+            //     }
+            // }).success(function (data, status) {
+            //     if (data.errcode == 0) {
+            //     } else {
+            //         alert(data.errmsg);
+            //     }
+            // }).error(function (data, status) {
+            // });
+            $scope.deleteManagerName = null;
+            $scope.deleteManagerPwd = null;
+        }
+
 
         }])
     .controller('AddCtrl', ['$scope','$rootScope', '$http', function ($scope,$rootScope, $http) {
@@ -358,9 +477,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         $AppFunc.setMenuLv2('shop/menu.html');
         $AppFunc.activeMenuLv2('shops');
 
-        $scope.industries = $rootScope.industries;
-
-        $scope.itemClassFilter = "全部"
+        $scope.itemClassFilter = {"name":"全部","baseRate":"0"}
         $scope.shopName = ""
         $scope.shopLocation = ""
         $scope.companyName = ""
@@ -421,7 +538,6 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         $scope.managerPhoneNum = $rootScope.shop.shopManagerMobile
         $scope.checkboxChecked = true
 
-        alert($scope.itemClassFilter)
 
         $scope.changeShopConformBtnClick = function () {
 
@@ -453,7 +569,6 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
             }
         }
     }]);
-
 
 
 
