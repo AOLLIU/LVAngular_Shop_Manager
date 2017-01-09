@@ -7,36 +7,37 @@
         <div class="form">
             <div class="form-view">
                 <label class="form-label">商铺名称</label>
-                <input type="text" class="input-text" ng-model="shopName">
+                <input type="text" class="input-text" ng-model="shopDetailInfo.shopName">
             </div>
             <div class="form-view">
                 <label class="form-label">商铺位置</label>
-                <input type="text" class="input-text" ng-model="shopLocation">
+                <input type="text" class="input-text" ng-model="shopDetailInfo.location">
             </div>
             <div class="form-view">
                 <label class="form-label">公司名</label>
-                <input type="text" class="input-text" ng-model="companyName">
+                <input type="text" class="input-text" ng-model="shopDetailInfo.companyName">
             </div>
             <div class="form-view">
                 <label class="form-label">主营业务所属类别</label>
-                <select class="input-text" ng-model="itemClassFilter" ng-options="class.name for class in industries">
+                <select class="input-text"  ng-model="shopDetailInfo.industry" ng-options="class for class in addindustries">
                 </select>
+
             </div>
             <div class="form-view">
                 <label class="form-label">品牌</label>
-                <input type="text" class="input-text" ng-model="brandName"><label class="addShopTipLabel">选填</label>
+                <input type="text" class="input-text" ng-model="shopDetailInfo.brand"><label class="addShopTipLabel">选填</label>
             </div>
             <div class="form-view">
                 <label class="form-label">负责人名称</label>
-                <input type="text" class="input-text" ng-model="shopManagerName">
+                <input type="text" class="input-text" ng-model="shopDetailInfo.shopManagerName">
             </div>
             <div class="form-view">
                 <label class="form-label">负责人身份证号</label>
-                <input type="text" class="input-text" ng-model="shopManagerIdcardno">
+                <input type="text" class="input-text" ng-model="shopDetailInfo.shopManagerIdcardno">
             </div>
             <div class="form-view">
                 <label class="form-label">负责人手机号</label>
-                <input type="text" class="input-text" ng-model="managerPhoneNum">
+                <input type="text" class="input-text" ng-model="shopDetailInfo.shopManagerMobile">
             </div>
             <div class="protocalCheckBoxContainer">
                 <input type="checkbox" ng-model="checkboxChecked">
@@ -54,4 +55,16 @@
 
         </div>
     </div>
+
+    <!--添加成功-->
+    <div class="modal fade" id="addShopSuccessModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+            <div class="modal-content destroyShopSuccessModalContainer">
+                <div class="modal-body">
+                    <div class="shopStatus-modalTitle">添加成功</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

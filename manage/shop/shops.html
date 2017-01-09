@@ -5,19 +5,19 @@
             <div class="panel-control-container">
                 <label class="panel-label">商户账号</label>
                 <input type="text" class="panel-input"
-                       placeholder="请输入商户账号" ng-model="shopId">
+                       placeholder="请输入商户账号" ng-model="searchShopItem.shopId">
             </div>
 
             <div class="panel-control-container">
                 <label class="panel-label">商户名称</label>
                 <input type="text" class="panel-input"
-                       placeholder="请输入商户名称" ng-model="shopName">
+                       placeholder="请输入商户名称" ng-model="searchShopItem.shopName">
             </div>
 
 
             <div class="panel-control-container">
                 <label class="panel-label">所属类别</label>
-                <select class="panel-select" ng-model="itemClassFilter" ng-options="class.name for class in industries">
+                <select class="panel-select" ng-init="searchShopItem.industry = shopIndustries[0]" ng-model="searchShopItem.industry" ng-options="class for class in shopIndustries">
                 </select>
 
             </div>
@@ -26,7 +26,7 @@
             <div class="panel-control-container">
                 <label class="panel-label">商户状态</label>
                 </select>
-                <select class="panel-select" ng-model="itemStateFilter" ng-options="state.canUseState for state in shopCanUseStates">
+                <select class="panel-select" ng-init="searchShopItem.status = shopCanUseStates[0]" ng-model="searchShopItem.status" ng-options="state.canUseState for state in shopCanUseStates">
                 </select>
             </div>
 
@@ -103,7 +103,7 @@
             <div class="modal-content changeShopStatusModalContainer">
                 <div class="modal-header shopModalCommonHeader">注销商户账户</div>
                 <div class="modal-body">
-                    <div class="shopStatus-modalTitle">即将注销{{destroyShopName}}</div>
+                    <div class="shopStatus-modalTitle">即将注销商户:{{destroyShopName}}</div>
                     <div class="shopStatus-modalTip">
                         注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
                     </div>
@@ -111,8 +111,8 @@
                 <div class="modal-footer shopModalCommonFooter" >
                     <div class="reasonRemarksTitle">备注原因</div>
                     <div class="reasonRemarks">
-                        <input type="text" placeholder="请输入操作原因" class="changeReasonInput" ng-model="destroyShopReason">
-                        <input type="text" placeholder="请输入授权密码" class="changeStatusAbilityInput" ng-model="destroyShopAbilityCode">
+                        <input type="text" placeholder="请输入操作原因" class="changeReasonInput" ng-model="destroyShopSubmitItem.destroyShopReason">
+                        <input type="text" placeholder="请输入授权密码" class="changeStatusAbilityInput" ng-model="destroyShopSubmitItem.destroyShopAbilityCode">
                         <button class="shopDetail-commentBtn selectStatusBtn changeConformBtn" data-toggle="modal" data-target="#destroyShopConformModal" ng-click="destroyShopBtnClick()">注销</button>
                     </div>
 
@@ -127,7 +127,7 @@
             <div class="modal-content changeShopStatusModalContainer">
                 <div class="modal-header shopModalCommonHeader">注销商户账户</div>
                 <div class="modal-body">
-                    <div class="shopStatus-modalTitle">即将注销{{destroyShopName}}</div>
+                    <div class="shopStatus-modalTitle">即将注销商户:{{destroyShopName}}</div>
                     <div class="shopStatus-modalTip">
                         注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
                     </div>

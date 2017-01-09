@@ -7,20 +7,20 @@
         <div class="form">
             <div class="form-view">
                 <label class="form-label">终端编号</label>
-                <input type="text" class="input-text" ng-model="terminalId">
+                <input type="text" class="input-text" ng-model="equipmentItem.terminalId">
             </div>
             <div class="form-view">
                 <label class="form-label">终端型号</label>
-                <input type="text" class="input-text" ng-model="terminalSN">
+                <input type="text" class="input-text" ng-model="equipmentItem.terminalSN">
             </div>
             <div class="form-view">
                 <label class="form-label">序列号</label>
-                <input type="text" class="input-text" ng-model="modelNo">
+                <input type="text" class="input-text" ng-model="equipmentItem.modelNo">
             </div>
 
             <div class="form-view">
                 <label class="form-label">所属商城</label>
-                <select class="input-text" ng-model="selectEquipmentBindStates" ng-options="state.equipmentBindStates for state in equipmentBindStates">
+                <select class="input-text"  ng-model="equipmentItem.mallName" ng-options="mallNameItem for mallNameItem in mallNames">
                 </select>
 
             </div>

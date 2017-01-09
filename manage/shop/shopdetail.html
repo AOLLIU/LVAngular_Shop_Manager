@@ -171,13 +171,14 @@
 		</div>
 	</div>
 
+
 	<!--注销商户账户-->
 	<div class="modal fade" id="destroyShopModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
 			<div class="modal-content changeShopStatusModalContainer">
 				<div class="modal-header shopModalCommonHeader">注销商户账户</div>
 				<div class="modal-body">
-					<div class="shopStatus-modalTitle">即将注销{{shop.shopName}}</div>
+					<div class="shopStatus-modalTitle">即将注销商户:{{shop.shopName}}</div>
 					<div class="shopStatus-modalTip">
 						注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
 					</div>
@@ -194,14 +195,13 @@
 			</div>
 		</div>
 		</div>
-
 	<!--注销商户账户确认-->
 	<div class="modal fade" id="destroyShopConformModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
 			<div class="modal-content changeShopStatusModalContainer">
 				<div class="modal-header shopModalCommonHeader">注销商户账户</div>
 				<div class="modal-body">
-					<div class="shopStatus-modalTitle">即将注销{{shop.shopName}}</div>
+					<div class="shopStatus-modalTitle">即将注销商户:{{shop.shopName}}</div>
 					<div class="shopStatus-modalTip">
 						注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
 					</div>
@@ -216,7 +216,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--注销成功-->
 	<div class="modal fade" id="destroyShopSuccessModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
@@ -227,7 +226,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--注销失败-->
 	<div class="modal fade" id="destroyShopFailModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
@@ -239,27 +237,29 @@
 		</div>
 	</div>
 
-	<!--添加/修改管理员-->
+
+
+	<!--添加管理员-->
 	<div class="modal fade" id="addShopManagerModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
 			<div class="modal-content changeShopStatusModalContainer">
-				<div class="modal-header shopModalCommonHeader">添加/删除商户账户管理员</div>
+				<div class="modal-header shopModalCommonHeader">添加商户账户管理员</div>
 				<div class="modal-body">
 					<div class="shopStatus-modalTitle">{{shop.shopName}}</div>
 					<div class="addShopManager-modalTip">
 						<div>
-							<input type="text" placeholder="请输入管理员用户名" class="addShopManagerInput" ng-model="addManagerName">
-							<label class="addShopManagerTip">用户名已占用</label>
+							<input type="text" placeholder="请输入管理员用户名" class="addShopManagerInput" ng-model="addManagerSubmitItem.addManagerName">
+							<label class="addShopManagerTip" ng-class="{'addShopManagerTipHideClass':addShopManagerTipHide }">用户名已占用</label>
 						</div>
 						<div>
-							<input type="text" placeholder="请输入管理员登录密码" class="addShopManagerInput" ng-model="addManagerPwd">
+							<input type="text" placeholder="请输入管理员登录密码" class="addShopManagerInput" ng-model="addManagerSubmitItem.addManagerPwd">
 						</div>
 
 					</div>
 				</div>
 				<div class="modal-footer shopModalCommonFooter" >
 					<div class="destroyShopConformBtn">
-						<button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="addManagerConformBtnClick()">添加管理员</button>
+						<button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="addOrChangeManagerConformBtnClick('addManager')">添加管理员</button>
 					</div>
 
 				</div>
@@ -267,25 +267,44 @@
 		</div>
 	</div>
 
-	<!--添加成功-->
+	<!--修改管理员-->
+	<div class="modal fade" id="changeShopManagerModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
+			<div class="modal-content changeShopStatusModalContainer">
+				<div class="modal-header shopModalCommonHeader">修改商户账户管理员</div>
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">{{shop.shopName}}</div>
+					<div class="addShopManager-modalTip">
+						<div>
+							<input type="text" placeholder="请输入管理员用户名" class="addShopManagerInput" ng-model="changeManagerSubmitItem.changeManagerName">
+						</div>
+						<div>
+							<input type="text" placeholder="请输入管理员登录密码" class="addShopManagerInput" ng-model="changeManagerSubmitItem.changeManagerPwd">
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer shopModalCommonFooter" >
+					<div class="destroyShopConformBtn">
+						<button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="addOrChangeManagerConformBtnClick('changeManager')">确定修改</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--成功提示-->
 	<div class="modal fade" id="addShopManagerSuccessModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
 			<div class="modal-content destroyShopSuccessModalContainer">
 				<div class="modal-body">
-					<div class="shopStatus-modalTitle">添加成功</div>
+					<div class="shopStatus-modalTitle">操作成功</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="deleteShopManagerSuccessModal" aria-hidden="true">
-		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-			<div class="modal-content destroyShopSuccessModalContainer">
-				<div class="modal-body">
-					<div class="shopStatus-modalTitle">删除成功</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 	<!--删除管理员-->
 	<div class="modal fade" id="deleteShopManagerModal" aria-hidden="true">
@@ -303,6 +322,17 @@
 						<button class="shopDetail-commentBtn selectStatusBtn addManagerBtn" ng-click="deleteShopManagerConformBtnClick()">确认删除</button>
 					</div>
 
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--删除成功提示-->
+	<div class="modal fade" id="deleteShopManagerSuccessModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+			<div class="modal-content destroyShopSuccessModalContainer">
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">删除成功</div>
 				</div>
 			</div>
 		</div>

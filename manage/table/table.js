@@ -18,12 +18,14 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         });
     }])
 
-    .controller('TableCtrl', ['$scope','$rootScope', function ($scope,$rootScope) {
+    .controller('TableCtrl', ['$scope', function ($scope) {
         $AppFunc.registerScope('table_table', $scope);
         $AppFunc.activeMenuLv1('table');
         $AppFunc.setMenuLv2('table/menu.html');
         $AppFunc.activeMenuLv2('table1');
 
+
+        //获取列表数据
         $scope.tableData = [
             {
             "createTime": 1483004699107,
@@ -43,42 +45,46 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
             },
             {
                 "createTime": 1483004699109,
-                "mallName": "体育中心",
+                "mallName": "沃尔玛",
                 "modelNo": "Device3",
                 "status": 2,
                 "terminalId": 2343,
                 "terminalSN": "addDeviceCase3"
             }
         ]
+        //获取所有绑定状态
         $scope.equipmentBindStates = [
             {"equipmentBindStates":"全部","status":"0"},
-            {"equipmentBindStates":"可用","status":"1"},
-            {"equipmentBindStates":"锁定","status":"2"},
-            {"equipmentBindStates":"停用","status":"3"}
+            {"equipmentBindStates":"已绑定","status":"1"},
+            {"equipmentBindStates":"未绑定","status":"2"},
+            {"equipmentBindStates":"已禁用","status":"3"}
         ];
-        $rootScope.equipmentBindStates = $scope.equipmentBindStates;
+        //获取所有商城列表(发送请求获取)
+        $scope.mallNames = ["天河城","正佳","万达","沃尔玛"];
 
-        $scope.terminalId = null
-        $scope.terminalSN = null
-        $scope.modelNo = null
-        $scope.selectEquipmentBindStates = {"equipmentBindStates":"全部","status":"0"},
-
+        //搜索的数据(发送网络请求用)
+        $scope.equipmentsearchItem = {
+            "terminalId":"",//终端编号
+            "terminalSN":"",//序列号
+            "modelNo":"",//终端型号
+            "status":"",
+        }
 
         //搜索
         $scope.page = 1
         $scope.hasNext = 1
         $scope.searchEquipmentBtnClick = function () {
-            alert($scope.terminalId + $scope.terminalSN + $scope.modelNo + $scope.selectEquipmentBindStates.status)
+            alert($scope.equipmentsearchItem.terminalId + $scope.equipmentsearchItem.terminalSN + $scope.equipmentsearchItem.modelNo + $scope.equipmentsearchItem.status)
             // 点击搜索
             // $http({
             //     method: "POST",
             //     url: "",
             //     data: {
             //         "page":$scope.page,
-            //         "terminalId": $scope.terminalId,
-            //         "terminalSN"  : $scope.terminalSN,
-            //         "modelNo": $scope.modelNo,
-            //         "selectEquipmentBindStates": $scope.selectEquipmentBindStates.status,
+            //         "terminalId": $scope.equipmentsearchItem.terminalId,
+            //         "terminalSN"  : $scope.equipmentsearchItem.terminalSN,
+            //         "modelNo": $scope.equipmentsearchItem.modelNo,
+            //         "status": $scope.equipmentsearchItem.status,
             //     }
             // }).success(function (data, status) {
             //     if (data.errcode == 0) {
@@ -135,7 +141,6 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
                 // });
             }
         }
-
 
 
         //修改设备信息
@@ -243,7 +248,6 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         }
 
 
-
         //删除设备(禁用设备)
         $scope.changeEquipmentItemUseStatus = function (equipmentItem) {
             $scope.willChangeEquipmentUseStatusItem = equipmentItem
@@ -311,10 +315,6 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         }
 
 
-
-
-
-
     }]).controller('AddEquipmentCtrl', ['$scope', function ($scope) {
         $AppFunc.registerScope('table_addequipment', $scope);
         $AppFunc.activeMenuLv1('table');
@@ -322,24 +322,31 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         $AppFunc.activeMenuLv2('table1');
 
 
-        //添加
-        $scope.terminalId = null
-        $scope.terminalSN = null
-        $scope.modelNo = null
-        $scope.selectEquipmentBindStates = {"equipmentBindStates":"全部","status":"0"},
+        //获取scope
+        var equipmentPageScope = $AppFunc.getScope("table_table")
+        //获取所属商城(在列表页已经从网络获取)
+        $scope.mallNames = equipmentPageScope.mallNames
+
+        //添加设备
+        $scope.equipmentItem = {
+            "terminalId":"",
+            "terminalSN":"",
+            "modelNo":"",
+            "mallName":""
+        }
         $scope.addEquipmentConformBtnClick = function () {
 
-            alert($scope.terminalId + $scope.terminalSN + $scope.modelNo + $scope.selectEquipmentBindStates.equipmentBindStates)
+            alert($scope.equipmentItem.terminalId + $scope.equipmentItem.terminalSN + $scope.equipmentItem.modelNo + $scope.equipmentItem.mallName)
 
             // 添加设备接口
             // $http({
             //     method: "POST",
             //     url: "",
             //     data: {
-            //         terminalId :  $scope.terminalId,
-            //         terminalSN:$scope.terminalSN,
-            //         modelNo:$scope.modelNo,
-            //         selectEquipmentBindStates:$scope.selectEquipmentBindStates.status,
+            //         terminalId :  $scope.equipmentItem.terminalId,
+            //         terminalSN:$scope.equipmentItem.terminalSN,
+            //         modelNo:$scope.equipmentItem.modelNo,
+            //         mallName:$scope.equipmentItem.mallName,
             //     }
             // }).success(function (data, status) {
             //     if (data.errcode == 0) {

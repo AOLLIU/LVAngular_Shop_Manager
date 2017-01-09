@@ -454,7 +454,8 @@ div {
   border: 1px solid gray;
   height: 30px;
   line-height: 30px;
-  font-size: 15px;
+  font-size: 14px;
+  padding-left: 4px;
 }
 .panel-select {
   margin-left: 10px;
@@ -799,6 +800,9 @@ div {
   width: 90px;
   height: 30px;
   padding: 2px 5px;
+}
+.addShopManagerTipHideClass {
+  visibility: hidden;
 }
 .equipmentHadBindState {
   background-color: #414fe0;

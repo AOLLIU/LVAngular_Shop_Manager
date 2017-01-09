@@ -5,29 +5,29 @@
             <div class="panel-control-container">
                 <label class="panel-label">终端型号</label>
                 <input type="text" class="panel-input"
-                       placeholder="请输入终端型号" ng-model="modelNo">
+                       placeholder="请输入终端型号" ng-model="equipmentsearchItem.modelNo">
             </div>
 
             <div class="panel-control-container">
                 <label class="panel-label">终端编号</label>
                 <input type="text" class="panel-input"
-                       placeholder="请输入终端编号" ng-model="terminalId">
+                       placeholder="请输入终端编号" ng-model="equipmentsearchItem.terminalId">
             </div>
 
 
             <div class="panel-control-container">
                 <label class="panel-label">序列号</label>
                 <input type="text" class="panel-input"
-                       placeholder="请输入序列号" ng-model="terminalSN">
+                       placeholder="请输入序列号" ng-model="equipmentsearchItem.terminalSN">
 
             </div>
 
 
             <div class="panel-control-container">
                 <label class="panel-label">绑定状态</label>
+                <select class="panel-select" ng-init="equipmentsearchItem.status = equipmentBindStates[0]" ng-model="equipmentsearchItem.status" ng-options="state.equipmentBindStates for state in equipmentBindStates" >
                 </select>
-                <select class="panel-select" ng-model="selectEquipmentBindStates" ng-options="state.equipmentBindStates for state in equipmentBindStates">
-                </select>
+
             </div>
 
             <div class="panel-control-container">
@@ -129,7 +129,10 @@
 
                     <div class="form-view">
                         <label class="form-label">所属商城</label>
-                        <input type="text" class="input-text" ng-model="willChangedEquipmentItem.mallName">
+                        <select class="input-text">
+                            <option ng-repeat="mallName in mallNames" ng-selected="mallName == willChangedEquipmentItem.mallName" ng-model="willChangedEquipmentItem.mallName">{{mallName}}</option>
+                        </select>
+
                     </div>
                 </div>
                 <div class="modal-footer shopModalCommonFooter" >
