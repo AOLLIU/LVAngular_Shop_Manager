@@ -19,8 +19,9 @@
             </div>
             <div class="form-view">
                 <label class="form-label">主营业务所属类别</label>
-                <select class="input-text"  ng-model="shopDetailInfo.industry" ng-options="class for class in addindustries">
+                <select class="input-text"  ng-model="shopDetailInfo.industry" ng-options="class.name for class in addindustries">
                 </select>
+
 
             </div>
             <div class="form-view">
@@ -48,20 +49,17 @@
             <div class="addShop-btnContainer">
                 <button type="button" class="addShopConformBtn" ng-click="addShopConformBtnClick()">确认提交</button>
                 <a href="#!/shop/shops" class="addShopCancelBtn"><span class="addShopCancelSpan">取消</span></a>
-
             </div>
-
-
 
         </div>
     </div>
 
-    <!--添加成功-->
-    <div class="modal fade" id="addShopSuccessModal" aria-hidden="true">
+    <!--提示-->
+    <div class="modal fade" id="tipMessageModal" aria-hidden="true">
         <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
             <div class="modal-content destroyShopSuccessModalContainer">
                 <div class="modal-body">
-                    <div class="shopStatus-modalTitle">添加成功</div>
+                    <div class="shopStatus-modalTitle">{{tipMessage}}</div>
                 </div>
             </div>
         </div>

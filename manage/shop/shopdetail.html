@@ -4,14 +4,14 @@
 	<div class="shopDetailHeader-container">
 			<div class="shopDetailContainer">
 				<span class="shopDetailTitle">{{shop.shopName}}</span>
-				<input type="button" class="shopDetailState" ng-value="shopDetailStatus" ng-class="{'shopAbleUseState':shop.status == 0,'shopLockUseState':shop.status == 1,'shopDisableUseState':shop.status == 2}">
+				<input type="button" class="shopDetailState" ng-value="shopDetailStatus" ng-class="{'shopAbleUseState':shop.status == 1,'shopLockUseState':shop.status == 2,'shopDisableUseState':shop.status == 3}">
 				<label class="shopDetailLocation">{{shop.location}}</label>
 			</div>
 
 			<div class="shopDetailHeader-innerContainer">
 				<div class="shopHeaderLeftContainer">
 					<div>信用额度</div>
-					<div class="shopDetail-creditLimit">{{shop.commissionChargeRate}}</div>
+					<div class="shopDetail-creditLimit">{{shop.creditLimit}}</div>
 				</div>
 				<div class="shopHeaderRightContainer">
 					<div class="shopManagerInfoDiv">负责人信息:  {{shop.shopManagerName}} {{shop.shopManagerMobile}}</div>
@@ -19,7 +19,7 @@
 
 						<button class="shopDetail-commentBtn" id="changeShopStatus" data-toggle="modal" data-target="#changeShopStatusModal"><span>修改状态</span></button>
 						<a href="#!/shop/changeShopData" class="shopDetail-commentBtn"><span>修改资料</span></a>
-						<button class="shopDetail-commentBtn" id="destroyShop" data-toggle="modal" data-target="#destroyShopModal"><span>注销商户</span></button>
+						<button class="shopDetail-commentBtn" id="destroyShop" ng-click="destroyShopModalBtnClick()"><span>注销商户</span></button>
 
 					</div>
 				</div>
@@ -50,9 +50,8 @@
 	<div class="settlementPeriod-container">
 		<div style="position: relative">
 			<div class="shopDetail-commentTitle">管理员设置</div>
-			<!--<a href="" class="shopDetail-commentBtn addManagerBtnClass"><span>添加管理员</span></a>-->
-
-			<button class="shopDetail-commentBtn addManagerBtnClass"  data-toggle="modal" data-target="#addShopManagerModal"><span>添加管理员</span></button>
+			<!--已经写好,但是目前不做添加管理员功能先行注释-->
+			<!--<button class="shopDetail-commentBtn addManagerBtnClass"  data-toggle="modal" data-target="#addShopManagerModal"><span>添加管理员</span></button>-->
 
 		</div>
 
@@ -72,7 +71,8 @@
 				<td>{{shopAdmin.password}}</td>
 				<td>
 					<button class="tdInnerBtn" ng-click="changeManagerItemInfo([shopAdmin.username,shopAdmin.password])"><span>修改</span></button>
-					<button class="tdInnerBtn" ng-click="deleteManagerItemInfo([shopAdmin.username,shopAdmin.password])"><span>删除</span></button>
+					<!--已经写好,但是目前不做删除管理员功能先行注释-->
+					<!--<button class="tdInnerBtn" ng-click="deleteManagerItemInfo([shopAdmin.username,shopAdmin.password])"><span>删除</span></button>-->
 
 				</td>
 			</tr>
@@ -95,12 +95,12 @@
 			</tr>
 			</thead>
 			<tbody>
-
+			variable1 !== null || variable1 !== undefined || variable1 !== ''
 			<tr ng-repeat="d in shopCashiers">
 				<td>{{d.realname}}</td>
 				<td>{{d.mobile}}</td>
-				<td>{{d.creatTime | myDateFormat}}</td>
-				<td>{{d.lastLoginTime | myDateFormat}}</td>
+				<td>{{(d.createTime == "" || d.createTime == undefined || d.createTime == null)?"":createTime | myDateFormat}}</td>
+				<td>{{(d.lastLoginTime == "" || d.lastLoginTime == undefined || d.lastLoginTime == null)?"":lastLoginTime | myDateFormat}}</td>
 			</tr>
 			</tbody>
 		</table>
@@ -133,8 +133,8 @@
 				<td>{{d.terminalId}}</td>
 				<td>{{d.terminalSN}}</td>
 				<td>{{d.mallName}}</td>
-				<td>{{d.createTime | myDateFormat}}</td>
-				<td>{{d.status}}</td>
+				<td>{{(d.createTime == "" || d.createTime == undefined || d.createTime == null)?"":createTime | myDateFormat}}</td>
+				<td>{{d.status | showEquipmentBindState}}</td>
 			</tr>
 			</tbody>
 		</table>
@@ -150,9 +150,9 @@
 				<div class="modal-body">
 					<div class="shopStatus-modalTitle">{{shop.shopName}}</div>
 					<div class="shopStatus-modalBtnContainer">
-						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 0}" ng-click="startUsingBtnClick()"><span>启用</span></button>
-						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 1}" ng-click="freezeUsingBtnClick()"><span>冻结</span></button>
-						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 2}" ng-click="forbidUsingBtnClick()"><span>禁用</span></button>
+						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 1}" ng-click="startUsingBtnClick()"><span>启用</span></button>
+						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 2}" ng-click="freezeUsingBtnClick()"><span>冻结</span></button>
+						<button class="shopDetail-commentBtn" ng-class="{'selectStatusBtn':virtualStatus == 3}" ng-click="forbidUsingBtnClick()"><span>禁用</span></button>
 					</div>
 					<div class="shopStatus-modalTip">
 						提示:冻结账户，账户将不能进行正常交易，仅能登录和查看历史数据。请谨慎操作!
@@ -216,27 +216,6 @@
 			</div>
 		</div>
 	</div>
-	<!--注销成功-->
-	<div class="modal fade" id="destroyShopSuccessModal" aria-hidden="true">
-		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-			<div class="modal-content destroyShopSuccessModalContainer">
-				<div class="modal-body">
-					<div class="shopStatus-modalTitle">注销成功</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--注销失败-->
-	<div class="modal fade" id="destroyShopFailModal" aria-hidden="true">
-		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-			<div class="modal-content destroyShopSuccessModalContainer">
-				<div class="modal-body">
-					<div class="shopStatus-modalTitle">注销失败</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 
 
 	<!--添加管理员-->
@@ -266,7 +245,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--修改管理员-->
 	<div class="modal fade" id="changeShopManagerModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 800px; margin-top: 200px;">
@@ -294,16 +272,6 @@
 		</div>
 	</div>
 
-	<!--成功提示-->
-	<div class="modal fade" id="addShopManagerSuccessModal" aria-hidden="true">
-		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-			<div class="modal-content destroyShopSuccessModalContainer">
-				<div class="modal-body">
-					<div class="shopStatus-modalTitle">操作成功</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 	<!--删除管理员-->
@@ -326,7 +294,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--删除成功提示-->
 	<div class="modal fade" id="deleteShopManagerSuccessModal" aria-hidden="true">
 		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
@@ -338,5 +305,17 @@
 		</div>
 	</div>
 
+
+
+	<!--提示-->
+	<div class="modal fade" id="tipMessageModal" aria-hidden="true">
+		<div class="modal-dialog" style="width: 150px; margin-top: 200px;">
+			<div class="modal-content destroyShopSuccessModalContainer">
+				<div class="modal-body">
+					<div class="shopStatus-modalTitle">{{tipMessage}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </div>

@@ -87,14 +87,6 @@
         </tbody>
     </table>
 
-    <!--批量处理暂时没有做-->
-    <!--<div class="operationCenterContainer">-->
-        <!--<input type="checkbox"><label class="totalSelectLabel">全选</label>-->
-        <!--<button class="tdInnerBtn" ng-click="changeEquipmentItemInfo([])"><span>绑定s</span></button>-->
-        <!--<button class="tdInnerBtn" ng-click="changeEquipmentItemBind([])"><span>解绑</span></button>-->
-        <!--<button class="tdInnerBtn" ng-click="deleteEquipmentItemBind([])"><span>禁用</span></button>-->
-    <!--</div>-->
-
     <!--页码标记-->
     <div class="bodyContainerFooter">
 
@@ -102,11 +94,6 @@
         <!--<label class="displayPageLabel">第1页,共100页</label>-->
         <input class="detailPageBtn" type="button" value="下一页" ng-click="jumpToNextPage()"/>
     </div>
-
-
-
-
-
 
     <!--修改设备信息-->
     <div class="modal fade" id="changeEquipmentInfoModal" aria-hidden="true">
@@ -144,17 +131,6 @@
             </div>
         </div>
     </div>
-    <!--修改成功-->
-    <div class="modal fade" id="changeEquipmentInfoSuccessModal" aria-hidden="true">
-        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-            <div class="modal-content destroyShopSuccessModalContainer">
-                <div class="modal-body">
-                    <div class="shopStatus-modalTitle">修改成功</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 
     <!--绑定设备-->
@@ -179,16 +155,7 @@
             </div>
         </div>
     </div>
-    <!--绑定成功-->
-    <div class="modal fade" id="buildEquipmentBindStatusSuccessModal" aria-hidden="true">
-        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-            <div class="modal-content destroyShopSuccessModalContainer">
-                <div class="modal-body">
-                    <div class="shopStatus-modalTitle">绑定成功</div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!--解除绑定-->
     <div class="modal fade" id="destoryEquipmentBindStatusModal" aria-hidden="true">
@@ -214,17 +181,6 @@
             </div>
         </div>
     </div>
-    <!--解绑成功-->
-    <div class="modal fade" id="destoryEquipmentBindStatusSuccessModal" aria-hidden="true">
-        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-            <div class="modal-content destroyShopSuccessModalContainer">
-                <div class="modal-body">
-                    <div class="shopStatus-modalTitle">解绑成功</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 
     <!--删除设备(禁用)-->
@@ -270,17 +226,15 @@
         </div>
     </div>
 
-
-    <!--禁用(启用)设备成功-->
-    <div class="modal fade" id="changeEquipmentItemUseStatusSuccessModal" aria-hidden="true">
+    <!--提示-->
+    <div class="modal fade" id="tipMessageModal" aria-hidden="true">
         <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
             <div class="modal-content destroyShopSuccessModalContainer">
                 <div class="modal-body">
-                    <div class="shopStatus-modalTitle">操作成功</div>
+                    <div class="shopStatus-modalTitle">{{tipMessage}}</div>
                 </div>
             </div>
         </div>
     </div>
-
 
 </div>

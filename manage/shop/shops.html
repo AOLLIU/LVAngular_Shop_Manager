@@ -17,7 +17,7 @@
 
             <div class="panel-control-container">
                 <label class="panel-label">所属类别</label>
-                <select class="panel-select" ng-init="searchShopItem.industry = shopIndustries[0]" ng-model="searchShopItem.industry" ng-options="class for class in shopIndustries">
+                <select class="panel-select" ng-init="searchShopItem.industry = shopIndustries[0]" ng-model="searchShopItem.industry" ng-options="class.name for class in shopIndustries">
                 </select>
 
             </div>
@@ -40,11 +40,11 @@
     <div class="shopUseStateContainer">
         状态说明:
         <input type="button" class="shopAbleUseState shopUseState">
-        <span class="stateLabel">正常</span>
+        <span class="stateLabel">启用</span>
         <input type="button" class="shopLockUseState shopUseState">
-        <span class="stateLabel">冻结</span>
+        <span class="stateLabel">锁定</span>
         <input type="button" class="shopDisableUseState shopUseState">
-        <span class="stateLabel">禁用</span>
+        <span class="stateLabel">已注销</span>
         <span style="float: right">
             <span>+</span>
             <a href="#!/shop/add"><span style="font-size: 14px">添加商户</span></a>
@@ -61,7 +61,7 @@
             <th>商铺位置</th>
             <th>所属分组</th>
             <th>负责人信息</th>
-            <th>信用额度</th>
+            <!--<th>信用额度</th>-->
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -74,14 +74,14 @@
             <td>{{d.location}}</td>
             <td>{{d.industry}}</td>
             <td>{{d.shopManagerName}}</td>
-            <td>{{d.commission}}</td>
+            <!--<td>{{d.commission}}</td>-->
             <td>
-                <input type="button" class="shopUseStateCenter" ng-class="{'shopAbleUseState':d.status == 0,'shopLockUseState':d.status == 1,'shopDisableUseState':d.status == 2}">
+                <input type="button" class="shopUseStateCenter" ng-class="{'shopAbleUseState':d.status == 1,'shopLockUseState':d.status == 2,'shopDisableUseState':d.status == 3}">
 
 </td>
             <td>
                 <a href="#!/shop/detail/{{d.shopId}}" class="tdInnerBtn"><span>详细</span></a>
-                <button class="tdInnerBtn" id="destroyShop" ng-click="shopItemDestroiedBtnClick([d.shopId,d.shopName])"><span>注销</span></button>
+                <button class="tdInnerBtn" id="destroyShop" ng-click="shopItemDestroiedBtnClick(d)"><span>注销</span></button>
 
             </td>
         </tr>
@@ -89,12 +89,13 @@
     </table>
 
     <!--页码标记-->
-    <div class="bodyContainerFooter">
+    <div class="bodyContainerFooter" id="bodyContainerFooter">
 
         <input id="forwardBtn" class="detailPageBtn" type="button" value="上一页" ng-click="jumpToForwardPage()"/>
         <!--<label class="displayPageLabel">第1页,共100页</label>-->
         <input class="detailPageBtn" type="button" value="下一页" ng-click="jumpToNextPage()"/>
     </div>
+
 
 
     <!--注销商户账户-->
@@ -103,7 +104,7 @@
             <div class="modal-content changeShopStatusModalContainer">
                 <div class="modal-header shopModalCommonHeader">注销商户账户</div>
                 <div class="modal-body">
-                    <div class="shopStatus-modalTitle">即将注销商户:{{destroyShopName}}</div>
+                    <div class="shopStatus-modalTitle">即将注销商户:{{destroyShopItem.shopName}}</div>
                     <div class="shopStatus-modalTip">
                         注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
                     </div>
@@ -127,7 +128,7 @@
             <div class="modal-content changeShopStatusModalContainer">
                 <div class="modal-header shopModalCommonHeader">注销商户账户</div>
                 <div class="modal-body">
-                    <div class="shopStatus-modalTitle">即将注销商户:{{destroyShopName}}</div>
+                    <div class="shopStatus-modalTitle">即将注销商户:{{destroyShopItem.shopName}}</div>
                     <div class="shopStatus-modalTip">
                         注销商户：注销商户后，商户账户不能正常交易，已注销商户账户不能恢复，仅能查看历史数据。请谨慎操作！
                     </div>
@@ -143,29 +144,16 @@
         </div>
     </div>
 
-    <!--注销成功-->
-    <div class="modal fade" id="destroyShopSuccessModal" aria-hidden="true">
+    <!--提示-->
+    <div class="modal fade" id="tipMessageModal" aria-hidden="true">
         <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
             <div class="modal-content destroyShopSuccessModalContainer">
                 <div class="modal-body">
-                    <div class="shopStatus-modalTitle">注销成功</div>
+                    <div class="shopStatus-modalTitle">{{tipMessage}}</div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--注销失败-->
-    <div class="modal fade" id="destroyShopFailModal" aria-hidden="true">
-        <div class="modal-dialog" style="width: 150px; margin-top: 200px;">
-            <div class="modal-content destroyShopSuccessModalContainer">
-                <div class="modal-body">
-                    <div class="shopStatus-modalTitle">注销失败</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 
 
 
