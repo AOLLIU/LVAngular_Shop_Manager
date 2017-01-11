@@ -31,7 +31,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         });
 
     }])
-    .controller('ShopsCtrl', ['$scope','$location', '$http', '$routeParams', function ($scope,$location,$http, $routeParams) {
+    .controller('ShopsCtrl', ['$scope', '$http', '$routeParams', function ($scope,$http, $routeParams) {
 
         //注册shop_shops
         $AppFunc.registerScope('shop_shops', $scope);
@@ -118,6 +118,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
                     if(data.shops.data.length == 0){
                         alertTipMessage("暂时没有搜索数据,请重新搜索!")
                         $('#bodyContainerFooter').hide()
+                        $scope.tableData = data.shops.data;
                     }else {
                         $('#bodyContainerFooter').show()
                         $scope.tableData = data.shops.data;
@@ -166,6 +167,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         $scope.destroyShopItem = {
             "shopId":0,
             "shopName":"",
+            "status":""
         }
         $scope.destroyShopSubmitItem = {
             "destroyShopReason":"",
@@ -175,6 +177,14 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
             $scope.destroyShopItem.status = model.status
             $scope.destroyShopItem.shopId = model.shopId
             $scope.destroyShopItem.shopName = model.shopName
+
+            $scope.destroyShopItemIndex = "";
+            for(var i = 0;i<$scope.tableData.length;i++){
+                if(model == $scope.tableData[i]){
+                    $scope.destroyShopItemIndex = i;
+                }
+            }
+
             if(model.status == 3){
                 alertTipMessage("该商户已被注销,无需重复操作!")
             }else {
@@ -199,7 +209,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
             }).success(function (data, status) {
                 if (data.errcode == 0) {
                     alertTipMessage("注销成功!")
-                    $location.path('#!/shop/shops')
+                    $scope.tableData[$scope.destroyShopItemIndex] = data.shop
                 } else {
                     alertTipMessage(data.errmsg)
                 }
@@ -281,8 +291,8 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
                 method: "POST",
                 url: "http://www.joosure.com:18081/shopmanage/manage/shop/changeShopStatus",
                 data: {
-                    'shopId': parseInt($scope.shopId),
-                    'status': parseInt($scope.virtualStatus),
+                    'shopId': $scope.shopId,
+                    'status': $scope.virtualStatus,
                     'changeStatusReason':$scope.changeStatusReason,
                     'changeStatusAbilityCode':$scope.changeStatusAbilityCode,
                 }
@@ -326,14 +336,12 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         }
         $scope.destroyShopConformBtnClick = function () {
 
-
-
             $('#destroyShopConformModal').modal('hide')
             $http({
                 method: "POST",
                 url: "http://www.joosure.com:18081/shopmanage/manage/shop/changeShopStatus",
                 data: {
-                    'shopId': parseInt($scope.destroyShopItem.shopId),
+                    'shopId': $scope.shopId,
                     'status': 3,
                     'destroyShopReason':$scope.destroyShopSubmitItem.destroyShopReason,
                     'destroyShopAbilityCode':$scope.destroyShopSubmitItem.destroyShopAbilityCode
@@ -385,7 +393,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
                 $('#addShopManagerModal').modal('hide')
                 $http({
                     method: "POST",
-                    url: "http://www.joosure.com:18081/shopmanage/manage/shop/add",
+                    url: "",
                     data: {
                         'addManagerName': $scope.addManagerSubmitItem.addManagerName,
                         'addManagerPwd': $scope.addManagerSubmitItem.addManagerPwd,
@@ -407,26 +415,27 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
             }else if(managerInfo == "changeManager"){
 
                 $('#changeShopManagerModal').modal('hide')
-                $http({
-                    method: "POST",
-                    url: "",
-                    data: {
-                        'changeManagerName': $scope.changeManagerSubmitItem.changeManagerName,
-                        'changeManagerPwd': $scope.changeManagerSubmitItem.changeManagerPwd,
-                         'shopId':$scope.shopId
-                    }
-                }).success(function (data, status) {
-                    if (data.errcode == 0) {
-                        alertTipMessage("修改成功!")
-                    } else {
-                        alertTipMessage(data.errmsg)
-                    }
-                }).error(function (data, status) {
-                    alertTipMessage("请求出错了!")
-                });
-
-                $scope.changeManagerSubmitItem.changeManagerName = null
-                $scope.changeManagerSubmitItem.changeManagerPwd = null
+                alertTipMessage("暂未开发接口!")
+                // $http({
+                //     method: "POST",
+                //     url: "",
+                //     data: {
+                //         'changeManagerName': $scope.changeManagerSubmitItem.changeManagerName,
+                //         'changeManagerPwd': $scope.changeManagerSubmitItem.changeManagerPwd,
+                //          'shopId':$scope.shopId
+                //     }
+                // }).success(function (data, status) {
+                //     if (data.errcode == 0) {
+                //         alertTipMessage("修改成功!")
+                //     } else {
+                //         alertTipMessage(data.errmsg)
+                //     }
+                // }).error(function (data, status) {
+                //     alertTipMessage("请求出错了!")
+                // });
+                //
+                // $scope.changeManagerSubmitItem.changeManagerName = null
+                // $scope.changeManagerSubmitItem.changeManagerPwd = null
             }
 
         }
@@ -465,7 +474,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
 
 
         }])
-    .controller('AddCtrl', ['$scope','$location', '$http', function ($scope,$location, $http) {
+    .controller('AddCtrl', ['$scope', '$http', function ($scope, $http) {
         $AppFunc.registerScope('shop_add', $scope);
         $AppFunc.activeMenuLv1('shop');
         $AppFunc.setMenuLv2('shop/menu.html');
@@ -525,7 +534,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
                         //回到详情页面
                         alertTipMessage("添加成功!")
                         setTimeout(function () {
-                            $location.path('#!/shop/shops')
+                            location.href = "#!/shop/shops"
                         },2000)
                     } else {
                         alertTipMessage(data.errmsg)
@@ -540,12 +549,23 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         }
 
     }])
-    .controller('ChangeCtrl',['$scope','$location','$http', function ($scope,$location, $http) {
+    .controller('ChangeCtrl',['$scope','$http', function ($scope, $http) {
 
         $AppFunc.registerScope('shop_change', $scope);
         $AppFunc.activeMenuLv1('shop');
         $AppFunc.setMenuLv2('shop/menu.html');
         $AppFunc.activeMenuLv2('shops');
+
+        //提醒
+        $scope.tipMessage = ""
+        //提示
+        function alertTipMessage(tipMessage) {
+            $scope.tipMessage = tipMessage
+            $('#tipMessageModal').modal('show')
+            setTimeout(function () {
+                $('#tipMessageModal').modal('hide')
+            },1000)
+        }
 
         //一.获取商户列表页的scope
         var shopListPageScope = $AppFunc.getScope("shop_shops")
@@ -564,11 +584,11 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
         $scope.changeShopConformBtnClick = function () {
 
             if ($scope.checkboxChecked == true){
-
                 $http({
                     method: "POST",
-                    url: "http://www.joosure.com:18081/shopmanage/manage/shop/add",
+                    url: "http://www.joosure.com:18081/shopmanage/manage/shop/edit",
                     data: {
+                        'shopId': shopDetailPageScope.shopId,
                         'shopName' : $scope.shopDetailInfo.shopName,
                         'location':$scope.shopDetailInfo.location,
                         'companyName':$scope.shopDetailInfo.companyName,
@@ -583,7 +603,7 @@ var shopApp = angular.module('myApp.shop', ['ngRoute'])
                         //回到详情页面
                         alertTipMessage("修改成功!")
                         setTimeout(function () {
-                            $location.path('#!/shop/shops')
+                            location.href = "#!/shop/detail/" + shopDetailPageScope.shopId
                         },2000)
                     } else {
                         alertTipMessage(data.errmsg)
@@ -642,9 +662,9 @@ shopApp.service('showEquipmentBindState', function() {
     this.myFunc = function (x) {
 
         var a = "已绑定"
-        if(x == 0){
+        if(x == 1){
             a = "已绑定"
-        }else if(x == 1){
+        }else if(x == 0){
             a = "未绑定"
         }else {
             a = "已禁用"

@@ -95,12 +95,12 @@
 			</tr>
 			</thead>
 			<tbody>
-			variable1 !== null || variable1 !== undefined || variable1 !== ''
 			<tr ng-repeat="d in shopCashiers">
 				<td>{{d.realname}}</td>
 				<td>{{d.mobile}}</td>
-				<td>{{(d.createTime == "" || d.createTime == undefined || d.createTime == null)?"":createTime | myDateFormat}}</td>
-				<td>{{(d.lastLoginTime == "" || d.lastLoginTime == undefined || d.lastLoginTime == null)?"":lastLoginTime | myDateFormat}}</td>
+				<td>{{(d.createTime == "" || d.createTime == undefined || d.createTime == null)?"":d.createTime | myDateFormat}}</td>
+				<td>{{(d.lastLoginTime == "" || d.lastLoginTime == undefined || d.lastLoginTime == null)?"":d.lastLoginTime | myDateFormat}}</td>
+
 			</tr>
 			</tbody>
 		</table>
@@ -133,7 +133,7 @@
 				<td>{{d.terminalId}}</td>
 				<td>{{d.terminalSN}}</td>
 				<td>{{d.mallName}}</td>
-				<td>{{(d.createTime == "" || d.createTime == undefined || d.createTime == null)?"":createTime | myDateFormat}}</td>
+				<td>{{(d.createTime == "" || d.createTime == undefined || d.createTime == null)?"":d.createTime | myDateFormat}}</td>
 				<td>{{d.status | showEquipmentBindState}}</td>
 			</tr>
 			</tbody>

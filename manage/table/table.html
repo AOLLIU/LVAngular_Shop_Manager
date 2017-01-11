@@ -74,12 +74,12 @@
             <td>{{d.terminalSN}}</td>
             <td>{{d.mallName}}</td>
             <td>
-                <input type="button" class="shopUseStateCenter" ng-class="{'equipmentHadBindState':d.status == 0,'equipmentNotBindState':d.status == 1,'equipmentHadDeleteState':d.status == 2}">
+                <input type="button" class="shopUseStateCenter" ng-class="{'equipmentHadBindState':d.status == 1,'equipmentNotBindState':d.status == 0,'equipmentHadDeleteState':d.status == 2}">
 
             </td>
             <td>
                 <button class="tdInnerBtn" ng-click="changeEquipmentItemInfo(d)"><span>修改</span></button>
-                <button class="tdInnerBtn" ng-click="changeEquipmentItemBind(d)" ng-class="{'selectStatusBtn':d.status == 1}" ><span>{{(d.status | showBindState).a}}</span></button>
+                <button class="tdInnerBtn" ng-click="changeEquipmentItemBind(d)" ng-class="{'selectStatusBtn':d.status == 0}" ><span>{{(d.status | showBindState).a}}</span></button>
                 <button class="tdInnerBtn" ng-click="changeEquipmentItemUseStatus(d)"><span>{{(d.status | showBindState).b}}</span></button>
 
             </td>

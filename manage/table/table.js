@@ -22,7 +22,7 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         });
     }])
 
-    .controller('TableCtrl', ['$scope', function ($scope) {
+    .controller('TableCtrl', ['$scope','$http', function ($scope,$http) {
         $AppFunc.registerScope('table_table', $scope);
         $AppFunc.activeMenuLv1('table');
         $AppFunc.setMenuLv2('table/menu.html');
@@ -42,8 +42,8 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         //获取所有绑定状态
         $scope.equipmentBindStates = [
             {"equipmentBindStates":"全部","status":""},
-            {"equipmentBindStates":"已绑定","status":"0"},
-            {"equipmentBindStates":"未绑定","status":"1"},
+            {"equipmentBindStates":"已绑定","status":"1"},
+            {"equipmentBindStates":"未绑定","status":"0"},
             {"equipmentBindStates":"已禁用","status":"2"}
         ];
 
@@ -78,6 +78,7 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
                     if(data.deviceTerminals.data.length == 0){
                         alertTipMessage("暂时没有搜索数据,请重新搜索!")
                         $('#bodyContainerFooter').hide()
+                        $scope.tableData = data.deviceTerminals.data;
                     }else {
                         $('#bodyContainerFooter').show()
                         $scope.tableData = data.deviceTerminals.data;
@@ -121,8 +122,25 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
 
 
         //四.修改设备信息
+        $scope.willChangedEquipmentItem = {
+            "terminalId":0,
+            "terminalSN":"",
+            "modelNo":"",
+            "mallName":""
+        }
         $scope.changeEquipmentItemInfo = function (equipmentItem) {
-            $scope.willChangedEquipmentItem = equipmentItem
+
+            $scope.willChangedEquipmentItem.terminalId = equipmentItem.terminalId
+            $scope.willChangedEquipmentItem.terminalSN = equipmentItem.terminalSN
+            $scope.willChangedEquipmentItem.modelNo = equipmentItem.modelNo
+            $scope.willChangedEquipmentItem.mallName = equipmentItem.mallName
+
+            $scope.willChangedEquipmentItemIndex = "";
+            for(var i = 0;i<$scope.tableData.length;i++){
+                if(equipmentItem == $scope.tableData[i]){
+                    $scope.willChangedEquipmentItemIndex = i;
+                }
+            }
             $('#changeEquipmentInfoModal').modal('show')
         }
         //确认修改设备信息
@@ -142,9 +160,26 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
             }).success(function (data, status) {
                 if (data.errcode == 0) {
                     alertTipMessage("修改成功!")
-                    setTimeout(function () {
-                        $location.path('#!/table/table')
-                    },2000)
+                    $scope.tableData[$scope.willChangedEquipmentItemIndex] = data.deviceTerminal
+                } else {
+                    alertTipMessage(data.errmsg)
+                }
+            }).error(function (data, status) {
+                alertTipMessage("请求出错了!")
+            });
+        }
+
+        //五.查询可绑定商户
+        function requestCanBindShop() {
+            $http({
+                method: "POST",
+                url: "http://www.joosure.com:18081/shopmanage/manage/device/searchBindableShop",
+                data: {
+
+                }
+            }).success(function (data, status) {
+                if (data.errcode == 0) {
+
                 } else {
                     alertTipMessage(data.errmsg)
                 }
@@ -154,14 +189,20 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         }
 
 
-        //五.绑定或者解绑
+        //六.绑定或者解绑
         $scope.changeEquipmentItemBind = function (equipmentItem) {
 
             $scope.willChangeEquipmentBindItem = equipmentItem
 
-            if(equipmentItem.status == 0){//已绑定,现在要解绑定
+            $scope.willChangeEquipmentBindItemIndex = "";
+            for(var i = 0;i<$scope.tableData.length;i++){
+                if(equipmentItem == $scope.tableData[i]){
+                    $scope.willChangeEquipmentBindItemIndex = i;
+                }
+            }
+            if(equipmentItem.status == 1){//已绑定,现在要解绑定
                 $('#destoryEquipmentBindStatusModal').modal('show')
-            }else if(equipmentItem.status == 1){//未绑定,现在要绑定
+            }else if(equipmentItem.status == 0){//未绑定,现在要绑定
                 $('#buildEquipmentBindStatusModal').modal('show')
             }else {//已删除,现在只能查看
                 alert("弹出查看")
@@ -169,6 +210,7 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         }
         //确认绑定
         $scope.buildEquipmentBindStatusConformBtnClick = function () {
+
 
             $('#buildEquipmentBindStatusModal').modal('hide')
 
@@ -185,9 +227,8 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
             }).success(function (data, status) {
                 if (data.errcode == 0) {
                     alertTipMessage("绑定成功!")
-                    setTimeout(function () {
-                        $location.path('#!/table/table')
-                    },2000)
+                    $scope.tableData[$scope.willChangeEquipmentBindItemIndex] = data.deviceTerminal
+
                     $scope.equipmentBindPwd = null
                 } else {
                     alertTipMessage(data.errmsg)
@@ -204,7 +245,7 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
 
             $http({
                 method: "POST",
-                url: "http://www.joosure.com:18081/shopmanage/manage/device/bind",
+                url: "http://www.joosure.com:18081/shopmanage/manage/device/unbind",
                 data: {
                     "terminalId":$scope.willChangeEquipmentBindItem.terminalId,
                     "terminalSN"  : $scope.willChangeEquipmentBindItem.terminalSN,
@@ -213,10 +254,8 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
                 }
             }).success(function (data, status) {
                 if (data.errcode == 0) {
-                    alertTipMessage("绑定成功!")
-                    setTimeout(function () {
-                        $location.path('#!/table/table')
-                    },2000)
+                    alertTipMessage("解绑成功!")
+                    $scope.tableData[$scope.willChangeEquipmentBindItemIndex] = data.deviceTerminal
                     $scope.destoryEquipmentBindPwd = null
                 } else {
                     alertTipMessage(data.errmsg)
@@ -229,12 +268,12 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
         }
 
 
-        //六.删除设备(禁用设备)
+        //七.删除设备(禁用设备)//这写接口都还没有
         $scope.changeEquipmentItemUseStatus = function (equipmentItem) {
             $scope.willChangeEquipmentUseStatusItem = equipmentItem
-            if(equipmentItem.status == 0){//现在可以使用,点击弹出禁用modal
+            if(equipmentItem.status == 1){//现在可以使用,点击弹出禁用modal
                 $('#changeEquipmentItemUseStatusModal').modal('show')
-            }else if(equipmentItem.status == 1){//现在可以使用,点击弹出禁用modal
+            }else if(equipmentItem.status == 0){//现在可以使用,点击弹出禁用modal
                 $('#changeEquipmentItemUseStatusModal').modal('show')
             }else {//现在是禁用状态,点击弹出启用modal
                 $('#startEquipmentItemUseStatusModal').modal('show')
@@ -291,7 +330,7 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
 
 
     }])
-    .controller('AddEquipmentCtrl', ['$scope', function ($scope) {
+    .controller('AddEquipmentCtrl', ['$scope','$http', function ($scope,$http) {
         $AppFunc.registerScope('table_addequipment', $scope);
         $AppFunc.activeMenuLv1('table');
         $AppFunc.setMenuLv2('table/menu.html');
@@ -336,7 +375,7 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
                 if (data.errcode == 0) {
                     alertTipMessage("添加成功!")
                     setTimeout(function () {
-                        $location.path('#!/table/table')
+                        location.href = '#!/table/table'
                     },2000)
                 } else {
                     alertTipMessage(data.errmsg)
@@ -345,9 +384,6 @@ var equipmentApp = angular.module('myApp.table', ['ngRoute'])
                 alertTipMessage("请求出错了!")
             });
         }
-        
-        
-        
     }]);
 
 
@@ -357,9 +393,9 @@ equipmentApp.service('showBindState', function() {
         var a = "查看"
         var b = "禁用"
         if(x == 0){
-            a = "解绑"
-        }else if(x == 1){
             a = "绑定"
+        }else if(x == 1){
+            a = "解绑"
         }else {
             b = "启用"
         }
